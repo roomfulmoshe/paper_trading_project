@@ -21,37 +21,8 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-console.log('Running LoginPageFirebase.js');
-
 let signUp = document.getElementById("signUp");
-// signUp.addEventListener('click', (e) =>{
-//     var email = document.getElementById('email').value;
-//     var password = document.getElementById('password').value;
-//     createUserWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//         // Signed up 
-//          console.log('creates user');
-//         const user = userCredential.user;
 
-//         set(ref(database, 'users/' + user.uid), {
-//             email: email,
-//             password:password
-//         })
-//         console.log('Should\'ve set user in database')
-//         localStorage.setItem('loggedInUser', JSON.stringify(user));
-//         localStorage.setItem('loggedIn', false);
-//         //User has been created successfully
-//         window.location.href = "HomePage.html";
-//         // ...
-//     })
-//     .catch((error) => {
-//         const errorCode = error.code;
-//         const errorMessage = error.message;
-//         alert('Error mesage' + errorMessage + errorCode);
-//         // ..
-//     });
-    
-// })
 signUp.addEventListener('click', async (e) => {
     e.preventDefault();
 
@@ -86,7 +57,6 @@ signUp.addEventListener('click', async (e) => {
 });
 
 
-
 let login = document.getElementById('login');
 login.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
@@ -111,31 +81,3 @@ login.addEventListener('click', (e) => {
         alert('Error message: ' + errorMessage + ' (' + errorCode + ')');
     });
 });
-
-
-// const user = auth.currentUser;
-// onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//     // User is signed in, see docs for a list of available properties
-//     // https://firebase.google.com/docs/reference/js/auth.user
-//     const uid = user.uid;
-//     // ...
-//     } else {
-//     // User is signed out
-//     // ...
-//     }
-// });
-
-// logout = document.getElementById('logout');
-// logout.addEventListener('click', () =>{
-
-//     signOut(auth).then(() => {
-//         // Sign-out successful.
-//         alert('user logged out');
-//       }).catch((error) => {
-//         const errorCode = error.code;
-//         const errorMessage = error.message;
-//         alert('Error mesage' + errorMessage + errorCode);
-//         // An error happened.
-//       });
-// })
