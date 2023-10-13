@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="LoginPageStyle.css" />
+  <title>Form Input Wave</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.2/lottie.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="lottie-container"></div>
+
+  <!-- <div class="background-image">
+        <img src="chart.png" alt="Background Image">
+      </div> -->
+
+  <div class="container">
+
+    <h1>Please Login</h1>
+    <div>
+      <div class="form-control">
+        <input id = "email" type="text" required>
+        <label>Email</label>
+        <!-- <label>
+            <span style="transition-delay: 0ms">E</span>
+              <span style="transition-delay: 50ms">m</span>
+              <span style="transition-delay: 100ms">a</span>
+              <span style="transition-delay: 150ms">i</span>
+              <span style="transition-delay: 200ms">l</span>
+        </label> -->
+      </div>
+
+      <div class="form-control">
+        <input id = "password" type="password" required>
+        <label>Password</label>
+      </div>
+
+      <button class="btn" id = "login">Login</button>
+      <button class="btn" id = "signUp">Sign Up</button>
+
+      <p class="text">Don't have an account? <a href="#">Register</a> </p>
+    </div>
+
+
+  </div>
+  <script src="LoginPageScript.js"></script>
+  <script type="module" src = "LoginPageFirebase.js"></script>
+</body>
+
+</html>

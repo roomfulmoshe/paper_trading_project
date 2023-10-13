@@ -1,0 +1,305 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: UbuntuLight;
+  src: url(font/UbuntuL.TTF);
+}
+
+body {
+  padding: 5%;
+  background-color: black;
+}
+
+.sideBar,
+.wrapper {
+  background-color: rgb(29, 29, 29);
+  box-shadow: 0px 0px 10px rgba(87, 87, 87, 0.4);
+  border-bottom: 50px;
+  height: 100%;
+  width: 200px;
+  color: #0dff00;
+  top: 0;
+  left: 0;
+  position: fixed;
+  padding: 10px;
+}
+
+.sideBar button.click:nth-child(n) {
+  margin-bottom: 12px;
+  margin-top: 12px;
+  /* background-color: rgb(50, 50, 50); */
+  transition: background-color 0.33s ease-out, padding 0.25s ease-out, border 0.33s ease-out;
+  display: inline-block;
+  width: 170px;
+  margin-left: 15px;
+  padding-left: 5px;
+  border-radius: 8px;
+  height: 40px;
+  vertical-align: middle;
+  text-align: left;
+  font-family: UbuntuLight, sans-serif;
+  font-size: 1.5em;
+  color: #0dff00;
+}
+
+#logo {
+  height: 100px;
+  width: 100px;
+}
+
+
+
+.sideBar button.click:nth-child(n):hover {
+  background-color: rgb(70, 70, 70);
+  transition: background-color 0.33s ease-in, border 0.33s ease-in, padding-left 0.25s ease-in;
+  border-radius: 10px;
+  padding-left: 15px;
+  vertical-align: middle;
+}
+
+.searchBtn {
+  display: flex;
+  background-color: rgb(200, 200, 200);
+  height: 40px;
+  border: rgb(200, 200, 200);
+  border-radius: 10px;
+  margin-bottom: 20px;
+
+}
+
+#searchBar {
+  background-color: rgb(200, 200, 200);
+  border: rgb(200, 200, 200);
+  border-radius: 10px;
+}
+
+.sideBar .input {
+  font-size: 16px;
+}
+
+.input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 1em;
+  padding-right: 30px;
+}
+
+.infoBar {
+  display: flex;
+  background-color: rgb(29, 29, 29);
+  color: #ffffff;
+  text-align: left;
+  margin-left: 200px;
+  padding: 2%;
+  border-radius: 20px;
+  margin-bottom: 20px;
+
+
+}
+
+.infoBar>th {
+  margin: 10px;
+  padding: 20px;
+  background-color: white;
+}
+
+.infoBar th {
+  padding: 10px;
+}
+
+.infoBar tr.topBar th {
+  padding: 0px;
+  font-family: UbuntuLight, sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.infoBar tr.topBar td {
+  padding: 0px;
+  font-family: UbuntuLight, sans-serif;
+  font-weight: normal;
+  font-size: 48px;
+}
+
+div#greeting {
+  display: flex;
+  margin-left: 200px;
+  text-align: center;
+  padding-top: 30px;
+  height: 110px;
+  font-family: UbuntuLight, sans-serif;
+
+}
+
+div#greeting h1 {
+  font-size: 400%;
+  color: #0dff00;
+  padding-left: 20px;
+}
+
+.click,
+.search {
+  background-color: transparent;
+  border: 0;
+  font-size: 1.1em;
+  color: white;
+  cursor: pointer;
+}
+
+.portfolio {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-align: center;
+  color: white;
+  box-shadow: 0px 0px 10px rgba(87, 87, 87, 0.4);
+  /* border: 2px solid #00ff0d; */
+  justify-content: space-between;
+  min-height: 100vh;
+  margin-left: 200px;
+  font-size: 1.2em;
+  background-color: rgb(29, 29, 29);
+  padding: 50px;
+  border-radius: 20px;
+}
+
+.portfolio p:nth-child(2) {
+  margin-top: 0px;
+}
+
+.portfolio p:nth-child(4) {
+  margin-top: 20px;
+}
+
+/* Style the outer container */
+.stockList {
+
+  height: 75vh;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgb(41, 41, 41);
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* Hide the scrollbar */
+.stockList::-webkit-scrollbar {
+  width: 0;
+  /* Set the width to 0 */
+  background: transparent;
+  /* Set the background to transparent */
+}
+
+
+
+
+
+
+
+table {
+  border-collapse: collapse;
+
+}
+
+/* Style the table */
+.stocks {
+  width: 100%;
+  border-collapse: separate;
+  /* Remove spacing between table cells */
+  border-spacing: 0 40px;
+}
+
+/* Style table rows */
+.stocks tr {}
+
+
+
+/* Style the first row (headers) */
+.stocks tr:first-child {
+
+  background-color: #e0e0e000;
+  /* Background color for the header row */
+
+}
+
+
+/* Style the cells within the table */
+.stocks th,
+.stocks td {
+  padding: 10px;
+}
+
+/* Add rounded corners to table cells */
+.stocks th {
+  border-radius: 10px;
+  /* Adjust the radius as needed */
+
+}
+
+.stock tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+
+.stocks td {
+  background-color: #0dff00;
+  color: black;
+  font-size: 130%;
+  animation: glow 1.5s infinite alternate;
+
+}
+
+
+
+.stocks tr:hover {
+  background-color: #0dff00;
+  transition: background-color 0.5s ease-in;
+}
+
+
+.stocks td:first-child {
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+
+.stocks td:last-child {
+  border-top-Right-radius: 50px;
+  border-bottom-Right-radius: 50px;
+}
+
+
+
+.stocks tr {}
+
+
+
+
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 2px #0dff00, 0 0 2px #0dff00, 0 0 10px #0dff00;
+    /* Initial shadow with spread radius of 20px */
+  }
+
+  100% {
+    box-shadow: 0 0 4px #0dff00, 0 0 2px #0dff00, 0 0 2px #0dff00;
+    /* Increased spread radius for glowing effect */
+  }
+}
+
+
+
+.stockBox {
+  background-color: green; /* Set the background color to green */
+  color: white; /* Set the text color to white for better visibility */
+}
+
+a{
+  color: #0dff00;
+}

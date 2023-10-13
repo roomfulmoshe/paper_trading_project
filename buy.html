@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Homepage</title>
+  <link href="HomePage.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <div class="sideBar">
+    <ul>
+      <div id="logo">
+        <div class="lottie-container"></div>
+        <!-- <img src="placeholder" alt="company logo" height="80px"> -->
+      </div>
+
+      <div class="searchBtn">
+        <button class="search">
+          <img src="searchBar.png" alt="search" width="40" id="searchBar">
+        </button>
+        <input type="text" class="input" placeholder="Search for Stocks">
+      </div>
+
+      <div><button class="click" id="portfolio">
+          <!--onclick="document.getElementById('test').style.display='none'"
+            --><a href = "HomePage.html">Portfolio</a>
+        </button></div>
+      <div><button class="click" id="buy"> <a href = "buy.html">Buy</a></button></div>
+      <div><button class="click" id="signOut"> <a href = "LoginPage.html">Sign out</a></button>
+      </div>
+    </ul>
+  </div>
+
+  <div width="100%" id="greeting">
+    <h1 id = "displayEmail">Hello, [name]!</h1>
+  </div>
+
+  <div id="test" class="infoBar">
+    <table width="100%">
+      <tr class="topBar">
+        <th colspan="2">Total value</th>
+        <th colspan="2">Today</th>
+        <th colspan="2">Buying power</th>
+      </tr>
+      <tr class="topBar">
+        <td colspan="2" id = "totalValue">$1,000,000</th>
+        <td colspan="2" id="currentDate">[data]</th>
+        <td colspan="2" id = "dollarAmount">[data]</th>
+      </tr>
+    </table>
+  </div>
+
+  <div width="100%" class="portfolio" id = "portfolio">
+    <div class="stockList" id = "stockList">
+      <table width="100%" class="stocks" id = "stockListTable"> 
+        <tr>
+          <th>Stocks</th>
+          <th>Current Value</th>
+          <th>Purchase</th>
+        </tr>
+        <tr>
+      </table>
+
+    </div>
+
+  </div>
+
+  <script type = "module" src="buyPage.js"></script>
+</body>
+
+</html>
