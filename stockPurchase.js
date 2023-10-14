@@ -66,6 +66,8 @@ async function getCurrentPrice(ticker) {
     }
   }
 
+
+
 //TODO: create function that returns last 52 week prices as an aray
 async function getLast52WeekClose(ticker) {
 
@@ -169,11 +171,10 @@ getLast52WeekClose(ticker).then(prices => {
 
 
 
-    ////////////////////////////////////////////////////////////////////////    ////////////
     const ctx = document.getElementById('stockChart1').getContext('2d');
    // Simulated data for stock prices
    const stockData = {
-    labels: Array.from({ length: 52 }, (_, i) => (i % 4 === 0 ? 'Month ' + (i / 4) : '')),
+    labels:  Array.from({ length: 52 }, (_, i) => (i % 4 === 0 ? 'Month ' + (i / 4) : '')),
     datasets: [
         {
             label: 'Stock Price',
@@ -243,7 +244,6 @@ getLast52WeekClose(ticker).then(prices => {
     // Set the horizontal grid lines to 10% opacity
     stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
     stockChart.update();
-    ///END CHART CODE //////////////////////////////////////////////////////////////////////////////////
 });
 
 
