@@ -1,0 +1,136 @@
+body {
+    position: relative; 
+  background-color: #181818;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color:rgb(25, 25, 25);
+  color: white;
+  border-radius: 10%;
+  padding: 5%;
+  box-shadow: 0 0 10px rgba(0, 255, 60, 0.5);
+  text-align: center;
+  width: 300px;
+  margin: 1%;
+  
+}
+
+h1 {
+  color: rgb(12, 230, 12);
+}
+
+.stock-info {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+label {
+  color: rgb(6, 227, 6);
+}
+
+input[type="number"] {
+  background: #222;
+  color: white;
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 20px;
+  width: 100%;
+}
+
+input[type="number"]:focus {
+  border-color: red;
+}
+
+.submit-button {
+  background: rgba(255, 0, 0, 0.91);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 13px;
+
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: rgb(19, 210, 19);
+}
+   
+  /* Common styles for both chart containers */
+  .chart-container {
+   
+    border: solid #0dff00;
+    max-width: 60%;
+    margin: 20px;
+    height: 60vh;
+
+    background-color: rgb(25, 25, 25);
+    padding: 4%;
+    border-radius: 5%;
+    z-index: -1;
+   
+  }
+  
+  /* Specific styles for the second chart container */
+  
+  
+  /* Additional styles for the canvas elements if needed */
+  #stockChart1 {
+    width: 100%; /* Make the canvases fill their respective containers */
+    height: 100%;
+    /* Add any other styles for the canvas elements */
+  }
+  
+  
+  /* Add a linear gradient overlay */
+  .chart-overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow interactions with the chart beneath */
+  }
+
+  .lottie-container {
+    position: fixed;
+
+    top: 0;
+    right: 50%;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+   
+     /* Place it behind the content */
+    /* You can set background properties here, such as background-color or background-image */
+ /* Example background color */
+}
+
+.lottie-container2 {
+    position: fixed;
+  
+    top: 0;
+    left: 50%;
+    
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+   
+     /* Place it behind the content */
+    /* You can set background properties here, such as background-color or background-image */
+ /* Example background color */
+}
+  

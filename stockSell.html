@@ -4,76 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stock Sale</title>
-  <style>
-    body {
-      background-color: black;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: black;
-      color: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-      text-align: center;
-      width: 300px;
-    }
-
-    h1 {
-      color: green;
-    }
-
-    .stock-info {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    label {
-      color: green;
-    }
-
-    input[type="number"] {
-      background: black;
-      color: white;
-      border: 1px solid green;
-      border-radius: 5px;
-      padding: 10px;
-      margin: 5px 0;
-      width: 100%;
-    }
-
-    input[type="number"]:focus {
-      border-color: red;
-    }
-
-    .submit-button {
-      background: red;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px;
-      cursor: pointer;
-    }
-
-    .submit-button:hover {
-      background: green;
-    }
-  </style>
+  <link href="stockBuyandSell.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.2/lottie.min.js"></script>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+    <div class="lottie-container"></div>
+    <div class="lottie-container2"></div>
   <div class="container">
     <h1>Stock Sale</h1>
     <div class="stock-info">
@@ -88,6 +27,14 @@
     </form>
 
     <script type = "module" src = "stockSell.js"></script>
+  </div>
+
+
+  <div class="chart-container">
+    <canvas id="stockChart1"></canvas>
+   
+    <div class="chart-overlay"></div>
+
   </div>
 </body>
 </html>

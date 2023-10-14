@@ -1,3 +1,14 @@
+// Get the container element where the animation will be displayed
+const container = document.querySelector(".lottie-container");
+
+// Load the Lottie animation from the provided URL
+lottie.loadAnimation({
+  container: container, // Specify the container element
+  renderer: "svg", // Choose the renderer (svg, canvas, html)
+  loop: true, // Set animation loop
+  autoplay: true, //  play automatically
+  path: "https://lottie.host/830e37be-df5c-4a5d-b6ec-58d9f2528494/3JzJN2MVyj.json", // Provide the URL of the animation JSON
+});
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";

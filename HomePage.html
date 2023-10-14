@@ -10,16 +10,82 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.2/lottie.min.js"></script>
   <!-- Included axios for making requests to backend server-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.2/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
 <body>
 
-  <div class="sideBar">
+  <body>
+    <nav class="nav">
+      <div class="containerbar">
+        <h1 class="logo"><a href="HomePage.html">My Website</a></h1>
+        <ul>
+          <li><a href="HomePage.html" class="current">Portfolio</a></li>
+          <li><a href="buy.html">Buy</a></li>
+          <li><a href="HomePage.html">Sell</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="LoginPage.html">Log Out</a></li>
+        </ul>
+       
+      </div>
+
+    </nav>
+
+    <div class="hero">
+     
+      <div class="container">
+        <div class="column">
+        <h1 id="homeH">Welcome To WallStreetWizards</h1>
+        <p id="homeP">Our Mission:
+          We aim toncial markets with confidence and intelligence.</p>
+      </div>
+      </div>
+      <div class="lottie-container"></div>
+    </div>
+
+   
+    <div class="twoChart">
+      <div class="chart-container">
+        <canvas id="stockChart1"></canvas>
+       
+        <div class="chart-overlay"></div>
+   
+        </div>
+
+         <!-- Add the gradient overlay -->
+         
+         <div class="chart-container chart-container2">
+      
+          <canvas id="stockChart2"></canvas>
+          <div class="chart-overlay"></div>
+         </div>
+
+           <section class="container content">
+
+          </section> 
+    </div>
+
+   
+
+       <!-- Add the gradient overlay -->
+  </div>
+
+    </div>
+       <!-- Add the gradient overlay -->
+  
+  </div>
+    
+
+    <!-- <script src="HomePage.js"></script> -->
+
+  <!-- <nav class="sideBar">
     <ul>
       <div id="logo">
         <div class="lottie-container"></div>
-        <!-- <img src="placeholder" alt="company logo" height="80px"> -->
+         comment out<img src="placeholder" alt="company logo" height="80px"> 
       </div>
 
       <div class="searchBtn">
@@ -30,14 +96,20 @@
       </div>
 
       <div><button class="click" id="portfolio">
-          <!--onclick="document.getElementById('test').style.display='none'"
-            --><a href = "HomePage.html">Portfolio</a>
+           comment outonclick="document.getElementById('test').style.display='none'"
+            <a href = "HomePage.html">Portfolio</a>
         </button></div>
       <div><button class="click" id="buy"> <a href = "buy.html">Buy</a></button></div>
+      <div><button class="click" id="sell"><a href="sell.html">Sell</a></button></div>
       <div><button class="click" id="signOut"> <a href = "LoginPage.html">Sign out</a></button>
       </div>
     </ul>
-  </div>
+
+    <button class="icon" id="toggle">
+      <div class="line line1"></div>
+      <div class="line line2"></div>
+    </button>
+  </nav> -->
 
   <div width="100%" id="greeting">
     <h1 id = "displayEmail">Hello, User!</h1>

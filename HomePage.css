@@ -8,10 +8,195 @@
   src: url(font/UbuntuL.TTF);
 }
 
-body {
-  padding: 5%;
-  background-color: black;
+@keyframes slideIn {
+  0% {
+      left: -100%;
+      opacity: 0;
+  }
+  100% {
+      left: 0;
+      opacity: 1;
+  }
 }
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* stick nav start */
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #222;
+  padding-bottom: 50px;
+  /* background-color: #222; */
+  background-color:rgb(34, 34, 34);
+}
+
+
+
+
+
+
+.nav {
+  position: fixed;
+  background-color: #222;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav .containerbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav ul {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 7px 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav.active {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav.active a {
+  color: #000;
+}
+
+.nav.active .container {
+  padding: 10px 0;
+}
+
+.nav a.current,
+.nav a:hover {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.lottie-container {
+  top:5%;
+  width: fit-content;
+  height: 100%;
+  position: relative;
+  opacity: 0; /* Set the initial opacity to 0 */
+  transition: opacity 1s; /* Add a 1s transition for opacity */
+}
+
+/* Apply the opacity transition to the .lottie-container when the site loads */
+.lottie-container {
+  
+  animation: fadeIn 5s forwards;
+}
+
+
+
+
+.hero {
+  /* background-image: url('https://images.pexels.com/photos/450035/pexels-photo-450035.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'); */
+  display: flex;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center;
+  height: 100vh;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  margin-bottom: 0px;
+  z-index: -2;
+}
+
+.container {
+   
+  margin: 0 auto ;
+  text-align: left;
+  position: relative;
+   /* Initially hide the container off-screen to the left */
+  opacity: 0; /* Initially set opacity to 0 for a fade-in effect */
+  transition: left 1s, opacity 1s; /* Add a 1s transition for both left and opacity */
+}
+
+.container p { 
+  font-family: 'Times New Roman', Times, serif;
+  color: rgba(173, 173, 173, 0.4);
+  padding-right: 10%;
+}
+
+#homeP{ 
+  padding-right: 40%;
+
+}
+.container {
+  animation: fadeIn 4s forwards;
+}
+
+.column {
+  flex: 1; /* Distribute columns evenly within .hero */
+  padding: 5%;
+}
+
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+.hero h1 {
+  font-size: 46px;
+  margin: -20px 0 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.content h2,
+.content h3 {
+  font-size: 150%;
+  margin: 20px 0;
+}
+
+.content p {
+  color: #555;
+  line-height: 30px;
+  letter-spacing: 1.2px;
+}
+
+/* sticky nav */
 
 .sideBar,
 .wrapper {
@@ -93,7 +278,8 @@ body {
   background-color: rgb(29, 29, 29);
   color: #ffffff;
   text-align: left;
-  margin-left: 200px;
+  margin: 5% 5% 3px;
+  
   padding: 2%;
   border-radius: 20px;
   margin-bottom: 20px;
@@ -127,7 +313,7 @@ body {
 
 div#greeting {
   display: flex;
-  margin-left: 200px;
+  margin-left: 2px;
   text-align: center;
   padding-top: 30px;
   height: 110px;
@@ -158,7 +344,8 @@ div#greeting h1 {
   /* border: 2px solid #00ff0d; */
   justify-content: space-between;
   min-height: 100vh;
-  margin-left: 200px;
+  margin: 5%;
+  margin-top: 1%;
   font-size: 1.2em;
   background-color: rgb(29, 29, 29);
   padding: 50px;
@@ -281,14 +468,17 @@ table {
 
 
 
+
+
+
 @keyframes glow {
   0% {
-    box-shadow: 0 0 2px #0dff00, 0 0 2px #0dff00, 0 0 10px #0dff00;
+    box-shadow: 0 0 2px green, 0 0 2px green, 0 0 10px green;
     /* Initial shadow with spread radius of 20px */
   }
 
   100% {
-    box-shadow: 0 0 4px #0dff00, 0 0 2px #0dff00, 0 0 2px #0dff00;
+    box-shadow: 0 0 4px green, 0 0 2px green, 0 0 2px green;
     /* Increased spread radius for glowing effect */
   }
 }
@@ -303,3 +493,52 @@ table {
 a{
   color: #0dff00;
 }
+
+.twoChart {
+  display: flex;
+  flex-direction: row; /* Vertical flex layout */
+  
+  justify-content: space-between; /* Push content to the top and bottom */
+  height: 100%; /* Fill the viewport vertically */
+  border: solid #0dff00;
+ 
+}
+
+
+/* Common styles for both chart containers */
+.chart-container, .chart-container2 {
+ 
+
+  max-width: 48%;
+  margin: 20px;
+  height: 50vh;
+  background-color: rgb(25, 25, 25);
+  padding: 4%;
+  border-radius: 5%;
+  z-index: -1;
+ 
+}
+
+/* Specific styles for the second chart container */
+
+
+/* Additional styles for the canvas elements if needed */
+#stockChart1, #stockChart2 {
+  width: 100%; /* Make the canvases fill their respective containers */
+  height: 100%;
+  /* Add any other styles for the canvas elements */
+}
+
+
+/* Add a linear gradient overlay */
+.chart-overlay {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow interactions with the chart beneath */
+}
+
+
+
