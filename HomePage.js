@@ -167,8 +167,9 @@ async function displayUserInfo(assetData) {
 
         const sellButtonRow = document.createElement('td');
         const sellButton = document.createElement('button');
+        sellButton.className = 'sellButton';
         sellButton.id = 'sellButton' + i;
-        sellButton.textContent = "sell shares";
+        sellButton.textContent = "SELL SHARES";
 
         sellButton.addEventListener('click', () => {
           sellButtonClickHandler(assetData[i].asset, assetData[i].amount, currentPrice) 

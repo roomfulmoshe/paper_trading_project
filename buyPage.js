@@ -133,7 +133,8 @@ async function displayUserInfo(assetData) {
         
         const purchaseBtn = document.createElement("button");
         purchaseBtn.id = "buyButton" + i;
-        purchaseBtn.textContent = "Buy";
+        purchaseBtn.className = "buyButton";
+        purchaseBtn.textContent = "BUY";
         purchaseTd.appendChild(purchaseBtn);
         purchaseBtn.addEventListener("click", function() {
             handleBuyBtnClick(i, ticker);  

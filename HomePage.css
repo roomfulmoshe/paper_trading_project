@@ -542,3 +542,71 @@ a{
 
 
 
+button.buyButton {
+  margin-bottom: 12px;
+  margin-top: 12px;
+  transition: text-shadow 0.2s ease-out, background-color 0.2s ease-out, border-radius 0.2s ease-out;
+  display: inline-block;
+  width: 150px;
+  padding-top: 4px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+  border-bottom: 6px solid rgb(40,20,20);
+  border-right: 6px solid rgb(40,20,20);
+  border-top: 3px solid rgb(110,20,20);
+  border-left: 3px solid rgb(140,20,20);
+  height: 40px;
+  vertical-align: middle;
+  text-align: center;
+  font-family: UbuntuLight, sans-serif;
+  font-size: 90%;
+  background-color: rgb(80,70,70);
+  color: rgb(255,245,245);
+  text-shadow: none;
+}
+
+button.sellButton {
+  margin-bottom: 12px;
+  margin-top: 12px;
+  transition: text-shadow 0.2s ease-out, background-color 0.2s ease-out, border-radius 0.2s ease-out;
+  display: inline-block;
+  width: 240px;
+  padding-top: 4px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+  border-bottom: 6px solid rgb(40,20,20);
+  border-right: 6px solid rgb(40,20,20);
+  border-top: 3px solid rgb(110,20,20);
+  border-left: 3px solid rgb(140,20,20);
+  height: 40px;
+  vertical-align: middle;
+  text-align: center;
+  font-family: UbuntuLight, sans-serif;
+  font-size: 90%;
+  background-color: rgb(80,70,70);
+  color: rgb(255,245,245);
+  text-shadow: none;
+}
+
+button.buyButton:hover, button.sellButton:hover {
+  background-color: rgb(110, 100, 100);
+  transition: text-shadow 0.2s ease-in, background-color 0.2s ease-in, border-radius 0.2s ease-in;
+  border-radius: 12px;
+  cursor:pointer;
+  font-weight: bold;
+  text-shadow: 0px 0px 12px rgb(200, 100, 75);
+}
+
+button.buyButton:active, button.sellButton:active {
+  background-color: rgb(172, 163, 163);
+  transform: translateY(4px);
+  padding-top: 7px;
+  border-radius: 12px;
+  border-right: 3px solid rgb(40,20,20);
+  border-bottom: 3px solid rgb(40,20,20);
+  border-top: 1px solid rgb(110,20,20);
+  border-left: 1px solid rgb(140,20,20);
+  font-weight: bold;
+  text-shadow: 0px 0px 12px rgb(200, 100, 75);
+}
+
