@@ -70,24 +70,30 @@ function getCurrentDateString() {
 
 function formatDollars(amount) {
 
-  // Convert input to string
+  // Convert to string
   let strAmount = amount.toString();
 
-  // Split on decimal to get whole and decimal parts
+  // Split on decimal
   let [whole, decimal] = strAmount.split(".");
 
-  // Add commas to whole part
-  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // Add commas to whole 
+  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
 
-  // If there is a decimal part, re-add decimal point and decimal
+  // Limit decimal to 2 places
   if (decimal) {
-    strAmount = `${whole}.${decimal}`;
+    decimal = decimal.slice(0, 2);
+  }
+
+  // Add decimal back if needed
+  if (decimal) {
+    strAmount = `${whole}.${decimal}`; 
   } else {
     strAmount = whole;
   }
 
-  // Add dollar sign and return
-  return "$" + strAmount; 
+  // Add $ and return
+  return "$" + strAmount;
+
 }
 
 async function sellButtonClickHandler(ticker, shares, currentPrice){
