@@ -11,6 +11,15 @@ function fixNav() {
     }
 }
 
+function getEmailUsername(email) {
+  const index = email.indexOf('@');
+  if (index === -1) {
+    return email; 
+  }
+
+  return email.substring(0, index);
+}
+
 // Get the container element where the animation will be displayed
 const container = document.querySelector(".lottie-container");
 
@@ -206,7 +215,7 @@ const loggedIn = localStorage.getItem('loggedIn');
 
 if (loggedInUser) {
   // You can access user properties, such as email, UID, etc.
-  const userEmail = loggedInUser.email;
+  let userEmail = loggedInUser.email;
   const userUID = loggedInUser.uid;
 
     //new user set initial properties for database table/node user_assets
@@ -248,7 +257,12 @@ if (loggedInUser) {
     }
   // Use the user information to personalize the dashboard content or perform actions.
   // For example, display the user's email on the dashboard.
-  document.getElementById('displayEmail').innerText = "Hello:  " + userEmail;
+  userEmail = getEmailUsername(userEmail);
+  const element = document.getElementById('displayEmail');
+
+  // Change the color 
+  element.style.color = "#0dff00";
+  document.getElementById('displayEmail').innerHTML = "<a>Hello,  " + userEmail + "</a>";
   document.getElementById('currentDate').innerText = getCurrentDateString();
 
 } else {

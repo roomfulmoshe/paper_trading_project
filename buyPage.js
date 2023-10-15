@@ -35,6 +35,17 @@ const auth = getAuth();
 
 const tickers = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "TSLA", "META", "BRK.B", "LLY", "V", "UNH", "TSM", "XOM", "WMT", "JPM", "NVO", "JNJ", "MA", "AVGO", "PG", "CVX", "ORCL", "HD", "MRK", "ABBV", "COST", "ADBE", "TM", "ASML", "KO"];
 
+
+function getEmailUsername(email) {
+  const index = email.indexOf('@');
+  if (index === -1) {
+    return email; 
+  }
+
+  return email.substring(0, index);
+}
+
+
 function getCurrentDateString() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -125,8 +136,15 @@ const loggedIn = localStorage.getItem('loggedIn');
 
 if (loggedInUser) {
   // You can access user properties, such as email, UID, etc.
-  const userEmail = loggedInUser.email;
+  let userEmail = loggedInUser.email;
   const userUID = loggedInUser.uid;
+
+  userEmail = getEmailUsername(userEmail);
+  const element = document.getElementById('displayEmail');
+
+  // Change the color 
+  element.style.color = "#0dff00";
+  document.getElementById('displayEmail').innerHTML = "<a>Hello,  " + userEmail +"</a>";
     // Reference to the user's assets
     const assetsRef = ref(database, 'user_assets/' + userUID + '/assets');
     // Fetch the data
@@ -145,7 +163,6 @@ if (loggedInUser) {
     });
   // Use the user information to personalize the dashboard content or perform actions.
   // For example, display the user's email on the dashboard.
-  document.getElementById('displayEmail').innerText = "Hello:  " + userEmail;
   document.getElementById('currentDate').innerText = getCurrentDateString();
 
 } else {
