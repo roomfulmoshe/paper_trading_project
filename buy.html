@@ -8,10 +8,14 @@
   <title>Homepage</title>
   <link href="HomePage.css" rel="stylesheet" type="text/css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.2/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 </head>
 
 <body>
+
+
 
     
   <nav class="nav">
@@ -22,7 +26,7 @@
         <li><a href="buy.html" class="current">Buy</a></li>
         <li><a href="HomePage.html">Sell</a></li>
         <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="Contact.html">Contact</a></li>
         <li><a href="LoginPage.html">Log Out</a></li>
       </ul>
     </div>
@@ -42,39 +46,60 @@
     <div class="lottie-container"></div>
   </div>
 
-  <section class="container content">
-    <h2>Content One</h2>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione dolorem voluptates eveniet tempora ut cupiditate magnam, sapiente, hic quo in ipsum iste soluta eaque perferendis nihil recusandae dolore officia aperiam corporis similique. Facilis quos tempore labore totam! Consectetur molestiae iusto ducimus error reiciendis aspernatur dolor, modi dolorem sit architecto, voluptate magni sunt unde est quas? Voluptates a dolorum voluptatum quo perferendis aut sit. Aspernatur libero laboriosam ab eligendi omnis delectus earum labore, placeat officiis sint illum rem voluptas ipsum repellendus iste eius recusandae quae excepturi facere, iure rerum sequi? Illum velit delectus dicta et iste dolorum obcaecati minus odio eligendi!</p>
+  <div class="page2">
+    <h1>Comapre Stocks to see whats right for You</h1>
+    <table class="compareCharts">
+     
+      <tr>
+        <td>
+          <div class="searchBtn">
+            <button class="search">
+              <img src="searchBar.png" alt="search" width="40" id="searchBarImage">
+            </button>
+            <input type="text" class="input" id="searchBar1" placeholder="Search for stocks">
+          </div>
+        </td>
+        <td>
+          <div class="searchBtn">
+            <button class="search">
+              <img src="searchBar.png" alt="search" width="40" id="searchBarImage">
+            </button>
+            <input type="text" class="input" id="searchBar2" placeholder="Search for stocks">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <h2 id="displayStockName">
+            Apple
+            <p>Today's Value: $293</p>
+           </h2>
+          
+          <div class="chart-container">
+    
+            <canvas id="stockChart1"></canvas>
+            <div class="chart-overlay"></div>
+          </div>
+        </td>
+        <td>
+          <h2 id="displayStockName2">Google
+            <p>Today's Value: $493</p>
+          </h2>
+          <div class="chart-container chart-container2">
+            <canvas id="stockChart2"></canvas>
+            <div class="chart-overlay"></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+   
+     
 
-    <h3>Content Two</h3>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur provident nostrum possimus inventore nisi laboriosam consequatur modi nulla eos, commodi, omnis distinctio! Maxime distinctio impedit provident, voluptates illo odio nostrum minima beatae similique a sint sapiente voluptatum atque optio illum est! Tenetur tempora doloremque quae iste aperiam hic cumque repellat?</p>
-  </section>
+    
+ 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-  <!-- <div class="sideBar">
-    <ul>
-      <div id="logo">
-        <div class="lottie-container"></div>
-      comment <img src="placeholder" alt="company logo" height="80px"> 
-      </div>
-
-      <div class="searchBtn">
-        <button class="search">
-          <img src="searchBar.png" alt="search" width="40" id="searchBar">
-        </button>
-        <input type="text" class="input" placeholder="Search for Stocks">
-      </div>
-
-      <div><button class="click" id="portfolio">
-         comment onclick="document.getElementById('test').style.display='none'"
-             <a href = "HomePage.html">Portfolio</a>
-        </button></div>
-      <div><button class="click" id="buy"> <a href = "buy.html">Buy</a></button></div>
-      <div><button class="click" id="sell"><a href="sell.html">Sell</a></button></div>
-      <div><button class="click" id="signOut"> <a href = "LoginPage.html">Sign out</a></button>
-      </div>
-    </ul>
-  </div> -->
 
   <div width="100%" id="greeting">
     <h1 id = "displayEmail">Hello, [name]!</h1>

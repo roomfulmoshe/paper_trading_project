@@ -91,8 +91,7 @@ async function getLast52WeekClose(ticker) {
       console.error(error);
     }
   
-}
-
+  }
 let ticker  = localStorage.getItem('buyBtn');
 document.getElementById('stockName').innerText = ticker;
 let currentPrice = await getCurrentPrice(ticker);
@@ -161,7 +160,10 @@ submitButton.addEventListener("click", function(event) {
 
   });
 
-
+  const monthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
 
 //ticker
 //Stock chart animation
@@ -170,12 +172,15 @@ getLast52WeekClose(ticker).then(prices => {
     closing_prices = prices;
     console.log(closing_prices);
 
+    const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
 
+    // Calculate the starting y-axis value to the nearest 10th
+    const minY = Math.floor(Math.min(...prices) / 10) * 10;
 
     const ctx = document.getElementById('stockChart1').getContext('2d');
    // Simulated data for stock prices
    const stockData = {
-    labels:  Array.from({ length: 52 }, (_, i) => (i % 4 === 0 ? 'Month ' + (i / 4) : '')),
+    labels: labels, // Use month names
     datasets: [
         {
             label: 'Stock Price',
@@ -204,40 +209,42 @@ getLast52WeekClose(ticker).then(prices => {
         type: 'line',
         data: stockData,
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    grid: {
-                        display: false, // Remove vertical grid lines
-                    },
-                    ticks: {
-                        color: 'white', // Set x-axis label color to white
-                    },
-                },
-                y: {
-                    beginAtZero: true,
-                    stepSize: 10,
-                    grid: {
-                        color: 'white', // Set y-axis grid line color to white
-                    },
-                    ticks: {
-                        color: 'white', // Set y-axis label color to white
-                    },
-                },
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              beginAtZero: true,
+              grid: {
+                display: false, // Remove vertical grid lines
+              },
+              ticks: {
+                color: 'white', // Set x-axis label color to white
+              },
             },
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                tooltip: {
-                    enabled: true,
-                    position: 'nearest',
-                },
+            y: {
+              beginAtZero: false,
+              suggestedMin: minY, // Set the suggested minimum to the nearest 10th
+              stepSize: 10,
+              grid: {
+                color: 'white', // Set y-axis grid line color to white
+              },
+              ticks: {
+                color: 'white', // Set y-axis label color to white
+              },
             },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              enabled: true,
+              position: 'nearest',
+            },
+          },
         },
-    });
+      });
+    
 
 
 

@@ -245,13 +245,35 @@ body {
 
 .searchBtn {
   display: flex;
-  background-color: rgb(200, 200, 200);
+  background-color: rgb(255, 255, 255);
   height: 40px;
   border: rgb(200, 200, 200);
   border-radius: 10px;
   margin-bottom: 20px;
 
 }
+
+
+.searchBtn1 {
+  flex: 1;
+  background-color: rgb(34, 34, 34);
+  height: 40px;
+  border: 1px solid rgb(200, 200, 200); /* Add a border style */
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.searchBtn2 {
+  flex: 1; /* You can adjust the flex value to control the width */
+  background-color: rgb(255, 0, 0);
+  height: 40px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+
+
 
 #searchBar {
   background-color: rgb(200, 200, 200);
@@ -487,7 +509,8 @@ a{
 .twoChart {
   display: flex;
   flex-direction: row; /* Vertical flex layout */
-  
+   
+
   justify-content: space-between; /* Push content to the top and bottom */
   height: 100%; /* Fill the viewport vertically */
   border: solid #0dff00;
@@ -499,11 +522,11 @@ a{
 .chart-container, .chart-container2 {
  
 
-  max-width: 48%;
-  margin: 20px;
-  height: 50vh;
+  max-width: 100%;
+  margin: 1%;
+  height: 60vh;
   background-color: rgb(25, 25, 25);
-  padding: 4%;
+  padding: 5%;
   border-radius: 5%;
   z-index: -1;
  
@@ -533,59 +556,68 @@ a{
 
 
 button.buyButton {
-  margin-bottom: 12px;
-  margin-top: 12px;
+  /* margin-bottom: 12px;
+  margin-top: 12px; */
   transition: text-shadow 0.2s ease-out, background-color 0.2s ease-out, border-radius 0.2s ease-out;
   display: inline-block;
-  width: 150px;
+  width: 100px;
   padding-top: 4px;
   padding-bottom: 5px;
-  border-radius: 15px;
-  border-bottom: 6px solid rgb(40,20,20);
+  border-radius: 5px;
+  /* border-bottom: 6px solid rgb(40,20,20);
   border-right: 6px solid rgb(40,20,20);
   border-top: 3px solid rgb(110,20,20);
   border-left: 3px solid rgb(140,20,20);
   height: 40px;
   vertical-align: middle;
-  text-align: center;
+  text-align: center; */
   font-family: UbuntuLight, sans-serif;
   font-size: 90%;
-  background-color: rgb(80,70,70);
-  color: rgb(255,245,245);
-  text-shadow: none;
+  background-color: rgb(30,30,30);
+  color: rgb(111 255 40);
+  /* text-shadow: none; */
 }
 
 button.sellButton {
-  margin-bottom: 12px;
-  margin-top: 12px;
+  /* margin-bottom: 12px;
+  margin-top: 12px; */
   transition: text-shadow 0.2s ease-out, background-color 0.2s ease-out, border-radius 0.2s ease-out;
   display: inline-block;
-  width: 240px;
+  width: 100px;
   padding-top: 4px;
   padding-bottom: 5px;
-  border-radius: 15px;
-  border-bottom: 6px solid rgb(40,20,20);
+  border-radius: 5px;
+  /* border-bottom: 6px solid rgb(40,20,20);
   border-right: 6px solid rgb(40,20,20);
   border-top: 3px solid rgb(110,20,20);
   border-left: 3px solid rgb(140,20,20);
   height: 40px;
   vertical-align: middle;
-  text-align: center;
+  text-align: center; */
   font-family: UbuntuLight, sans-serif;
-  font-size: 90%;
-  background-color: rgb(80,70,70);
-  color: rgb(255,245,245);
-  text-shadow: none;
+  font-size: 60%;
+  background-color: rgb(30,30,30);
+  color:rgb(111 255 40);
+   text-shadow: none;
+} 
+
+button.buyButton:hover,
+button.sellButton:hover {
+
+  transform: scale(1.1); /* Increase the size by 10% */
+  transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out, background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: bold;
+
+  text-shadow: 0px 0px 12px rgb(34, 253, 14);
 }
 
-button.buyButton:hover, button.sellButton:hover {
-  background-color: rgb(110, 100, 100);
-  transition: text-shadow 0.2s ease-in, background-color 0.2s ease-in, border-radius 0.2s ease-in;
-  border-radius: 12px;
-  cursor:pointer;
-  font-weight: bold;
-  text-shadow: 0px 0px 12px rgb(200, 100, 75);
+/* Add a smooth transition for the button size */
+button.buyButton,
+button.sellButton {
+  transition: transform 1s ease-in-out;
 }
+
 
 button.buyButton:active, button.sellButton:active {
   background-color: rgb(172, 163, 163);
@@ -599,4 +631,89 @@ button.buyButton:active, button.sellButton:active {
   font-weight: bold;
   text-shadow: 0px 0px 12px rgb(200, 100, 75);
 }
+
+
+
+.compareCharts {
+  width: 90vw;
+  height: 50vh;
+  table-layout: fixed;
+  margin: 0 auto; /* Horizontally center the table */
+  
+
+
+}
+
+
+.compareCharts td {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+
+
+
+
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.page2 {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 0%;
+  padding-bottom: 5%;
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: #1f1f1f; /* Set the background color for the second page */
+}
+
+.compareCharts tr:first-child td {
+ 
+  height: 10%; /* Set the height of the first row as desired (e.g., 10%) */
+}
+
+.compareCharts tr:last-child td {
+  height: 10%; /* The second row will fill the remaining space (e.g., 90%) */
+}
+
+.page2 h1 {
+  color: rgb(255, 0, 64);
+  text-align: center;
+  padding: 2%;
+  font-size: 290%; /* Adjust the size to your preference */
+  font-family: 'Times New Roman', Times, serif;
+
+ 
+}
+
+
+
+#displayStockName , #displayStockName2{ 
+
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 200%;
+  color: white;
+  position: relative;
+ 
+  padding: 2%;
+
+  border-radius: 10%;
+  width: 50%;
+ 
+}
+
+
+
+
+
+
+
 

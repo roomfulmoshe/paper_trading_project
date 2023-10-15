@@ -1,0 +1,129 @@
+/* faqs box css */
+.faq{
+  padding: 40px;
+  min-width: 300px;
+  font-size: 18px; 
+  width: 100%;
+  color: #fff;
+  box-sizing: border-box;
+  font-family: 'Muli', sans-serif;
+  background-color: #061;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin: 20px 0;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s ease;
+  margin: 20px;
+}
+
+.faq-container {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.faq.active {
+  background-color: #090; 
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1); 
+}
+.faq.active::before,
+.faq.active::after {
+  content: '\f075';
+  font-family: 'Font Awesome 5 Free';
+  color: #2ecc71;
+  font-size: 7rem;
+  position: absolute;
+  opacity: 0.2;
+  top: 20px;
+  left: 20px;
+  z-index: 0;
+}
+.faq.active::before {
+  color: #3498db;
+  top: -10px;
+  left: -30px;
+  transform: rotateY(180deg);
+}
+.faq-title {
+  color: #0f0;
+  margin: 0;
+  font-weight: bold; 
+  font-size: 24px;
+
+}
+
+.faq-text {
+
+  display: none;
+  margin: 15px 0;
+}
+
+.faq.active .faq-text {
+  display: block;
+}
+
+.faq-toggle {
+  background-color: #000;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  padding: 0;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  height: 30px;
+  width: 30px;
+}
+
+.faq-toggle:focus {
+  outline: 0;
+}
+
+.faq-toggle .fa-times {
+  display: none;
+  color: #fff;
+}
+
+.faq.active .faq-toggle .fa-times {
+  color: #fff;
+  display: block;
+}
+
+.faq.active .faq-toggle .fa-chevron-down {
+  display: none;
+}
+
+.faq.active .faq-toggle {
+  background-color: #005309;
+}
+
+
+.portfolio {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-align: center;
+  color: white;
+  box-shadow: 0px 0px 10px rgba(87, 87, 87, 0.4);
+  /* border: 2px solid #00ff0d; */
+  justify-content: space-between;
+  min-height: 100vh;
+  margin: 5%;
+  margin-top: 1%;
+  font-size: 1.2em;
+  background-color: rgb(29, 29, 29);
+  padding: 50px;
+  border-radius: 20px;
+}
+
+.portfolio p:nth-child(2) {
+  margin-top: 0px;
+}
+
+.portfolio p:nth-child(4) {
+  margin-top: 20px;
+}
