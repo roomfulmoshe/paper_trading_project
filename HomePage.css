@@ -53,6 +53,7 @@ body {
   left: 0;
   right: 0;
   transition: all 0.3s ease-in-out;
+  z-index: 3;
 }
 
 .nav .containerbar {
@@ -710,10 +711,24 @@ button.buyButton:active, button.sellButton:active {
  
 }
 
+#scrolling-container tr {
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 1.5s, opacity 1s;
+}
 
+#scrolling-container tr.animate {
+  transform: translateX(0);
+  opacity: 1;
+}
 
+#scrolling-container tr:nth-child(even) {
+  transform: translateX(-100%);
+}
 
-
-
-
-
+#scrolling-container tr.animate:nth-child(even) {
+  transform: translateX(0);
+}

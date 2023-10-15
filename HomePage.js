@@ -156,7 +156,7 @@ async function getCurrentPrice(ticker) {
 
 async function displayUserInfo(assetData) {
   //table to display user's stocks
-  const table = document.getElementById('stockList');
+  const table = document.getElementById('scrolling-container');
   var totalValue = 0;
   for (let i = 0; i < assetData.length; i++) {
     if (assetData[i].asset === "$") {
@@ -535,3 +535,34 @@ getLast52WeekClose('QQQ').then(prices => {
    stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
    stockChart.update();
 });
+
+//scroll-animation
+// Trigger the CSS animation on initial page load
+window.addEventListener('load', () => {
+  animateTableRows();
+});
+const table = document.querySelector('.stockList');
+
+table.addEventListener('scroll', animateTableRows);
+// Add a listener for scrolling
+window.addEventListener('scroll', () => {
+  animateTableRows();
+});
+const tableTop = table.getBoundingClientRect().top;
+
+
+// Function to trigger the animation
+function animateTableRows() {
+  const tableRows = document.querySelectorAll('#scrolling-container tr');
+  const triggerBottom = window.innerHeight  / 5 * 4;
+
+  tableRows.forEach(row => {
+      const rowTop = row.getBoundingClientRect().top;
+
+      if (rowTop < triggerBottom) {
+          row.classList.add('animate');
+      } else {
+          row.classList.remove('animate');
+      }
+  });
+}
