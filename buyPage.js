@@ -264,12 +264,16 @@ async function getLast52WeekClose(ticker) {
 var searchBar1 = document.getElementById("searchBar1");
 
 // Add an event listener for the "keyup" event
-searchBar1.addEventListener("keyup", function(event) {
+searchBar1.addEventListener("keyup", async function(event) {
   // Check if the key pressed is Enter (keyCode 13)
   if (event.key === "Enter") {
     
     // Get the value of the input field
     var searchValue1 = searchBar1.value;
+
+    let number = await getCurrentPrice(searchValue1);
+    number = formatDollars(number);
+    document.getElementById('displayStockName').innerHTML = `Company ticker: ${searchValue1} <p>Latest Price ${number}</p>`;
 
     var chartCanvas = document.getElementById('stockChart1');
 
@@ -377,7 +381,7 @@ searchBar1.addEventListener("keyup", function(event) {
 
 var searchBar2 = document.getElementById("searchBar2");
 
-searchBar2.addEventListener("keyup", function(event) {
+searchBar2.addEventListener("keyup", async function(event) {
   // Check if the key pressed is Enter (keyCode 13)
   if (event.key === "Enter") {
     
@@ -385,6 +389,9 @@ searchBar2.addEventListener("keyup", function(event) {
     var searchValue2 = searchBar2.value;
 
     var chartCanvas = document.getElementById('stockChart2');
+    let number = await getCurrentPrice(searchValue2);
+    number = formatDollars(number);
+    document.getElementById('displayStockName2').innerHTML = `Company ticker: ${searchValue2} <p>Latest Price ${number}</p>`;
 
     // Check if a chart exists and destroy it
     if (chartCanvas) {
@@ -479,4 +486,185 @@ searchBar2.addEventListener("keyup", function(event) {
     });
     
   }
-});    
+});
+
+
+
+let number1 = await getCurrentPrice('QQQ');
+let number2 = await getCurrentPrice('SPY');
+
+number1 = formatDollars(number1);
+number2 = formatDollars(number2);
+document.getElementById('displayStockName2').innerHTML = `S&P 500 <p>Latest Price ${number2}</p>`;
+document.getElementById('displayStockName').innerHTML = `QQQ <p>Latest Price ${number1}</p>`;
+
+getLast52WeekClose('QQQ').then(prices => {
+console.log(prices); // latest 52-week prices
+
+
+
+// Replace numeric labels with month names
+const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
+
+// Calculate the starting y-axis value to the nearest 10th
+const minY = Math.floor(Math.min(...prices) / 10) * 10;
+
+// Animation for Chart 2
+const ctx1 = document.getElementById('stockChart2').getContext('2d');
+
+// Simulated data for stock prices
+const stockData1 = {
+  labels: labels, // Use month names
+  datasets: [
+    {
+      label: 'Stock Price2',
+      data: prices, // Actual data
+      borderColor: 'green', // Initial color
+      borderWidth: 3, // Set line width
+      borderJoinStyle: 'round', // Soften the edges
+      fill: false,
+      pointRadius: 0, // Make data points invisible
+    },
+  ],
+};
+
+// Modify the line color based on data points
+const data1 = stockData1.datasets[0].data;
+
+if (data1[data1.length - 1] > data1[data1.length - 2]) {
+  stockData1.datasets[0].borderColor = 'red';
+}
+
+// Create the chart
+const stockChart1 = new Chart(ctx1, {
+  type: 'line',
+  data: stockData1,
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: {
+          display: false, // Remove vertical grid lines
+        },
+        ticks: {
+          color: 'white', // Set x-axis label color to white
+        },
+      },
+      y: {
+        beginAtZero: false,
+        suggestedMin: minY, // Set the suggested minimum to the nearest 10th
+        stepSize: 10,
+        grid: {
+          color: 'white', // Set y-axis grid line color to white
+        },
+        ticks: {
+          color: 'white', // Set y-axis label color to white
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        position: 'nearest',
+      },
+    },
+  },
+});
+
+// Set the horizontal grid lines to 10% opacity
+stockChart1.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
+stockChart1.update();
+});
+
+
+
+//deafault chart 
+getLast52WeekClose('SPY').then(prices => {
+  console.log(prices); // latest 52-week prices
+
+
+
+  // Replace numeric labels with month names
+  const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
+
+  // Calculate the starting y-axis value to the nearest 10th
+  const minY = Math.floor(Math.min(...prices) / 10) * 10;
+
+  // ANIMATION FOR CHART 1
+  const ctx = document.getElementById('stockChart1').getContext('2d');
+
+  // Simulated data for stock prices
+  const stockData = {
+    labels: labels, // Use month names
+    datasets: [
+      {
+        label: 'SPY',
+        data: prices, // Actual data
+        borderColor: 'green', // Initial color
+        borderWidth: 3, // Set line width
+        borderJoinStyle: 'round', // Soften the edges
+        fill: false,
+        pointRadius: 0, // Make data points invisible
+      },
+    ],
+  };
+
+  // Modify the line color based on data points
+  const data = stockData.datasets[0].data;
+
+  if (data[data.length - 1] < data[data.length - 2]) {
+    stockData.datasets[0].borderColor = 'red';
+  } else {
+    stockData.datasets[0].borderColor = 'green';
+  }
+
+  // Create the chart
+  const stockChart = new Chart(ctx, {
+    type: 'line',
+    data: stockData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: {
+            display: false, // Remove vertical grid lines
+          },
+          ticks: {
+            color: 'white', // Set x-axis label color to white
+          },
+        },
+        y: {
+          beginAtZero: false,
+          suggestedMin: minY, // Set the suggested minimum to the nearest 10th
+          stepSize: 10,
+          grid: {
+            color: 'white', // Set y-axis grid line color to white
+          },
+          ticks: {
+            color: 'white', // Set y-axis label color to white
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          enabled: true,
+          position: 'nearest',
+        },
+      },
+    },
+  });
+
+  // Set the horizontal grid lines to 10% opacity
+  stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
+  stockChart.update();
+});
