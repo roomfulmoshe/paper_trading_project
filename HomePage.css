@@ -707,8 +707,6 @@ button.buyButton:active, button.sellButton:active {
   padding: 2%;
   font-size: 290%; /* Adjust the size to your preference */
   font-family: 'Arial', Times, serif;
-
- 
 }
 
 
@@ -733,7 +731,7 @@ button.buyButton:active, button.sellButton:active {
   border-radius: 10px;
   opacity: 0;
   transform: translateX(100%);
-  transition: transform 1.5s, opacity 1s;
+  transition: transform .5s, opacity 1s;
 }
 
 #scrolling-container tr.animate {
