@@ -21,6 +21,36 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
+
+function formatDollars(amount) {
+
+    // Convert to string
+    let strAmount = amount.toString();
+  
+    // Split on decimal
+    let [whole, decimal] = strAmount.split(".");
+  
+    // Add commas to whole 
+    whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
+  
+    // Limit decimal to 2 places
+    if (decimal) {
+      decimal = decimal.slice(0, 2);
+    }
+  
+    // Add decimal back if needed
+    if (decimal) {
+      strAmount = `${whole}.${decimal}`; 
+    } else {
+      strAmount = whole;
+    }
+  
+    // Add $ and return
+    return "$" + strAmount;
+  
+  }
+  
+
 //Lottie Animation
 
 
@@ -88,6 +118,7 @@ var currentPrice = localStorage.getItem('sellCurrentPrice');
 
 document.getElementById('stockName').innerText = ticker;
 
+currentPrice = formatDollars(currentPrice);
 document.getElementById('stockPrice').innerText = "current price: $" + currentPrice;
 document.getElementById('sharesAvailable').innerText = "Shares available: " + shares;
 

@@ -1,3 +1,32 @@
+function formatDollars(amount) {
+
+  // Convert to string
+  let strAmount = amount.toString();
+
+  // Split on decimal
+  let [whole, decimal] = strAmount.split(".");
+
+  // Add commas to whole 
+  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
+
+  // Limit decimal to 2 places
+  if (decimal) {
+    decimal = decimal.slice(0, 2);
+  }
+
+  // Add decimal back if needed
+  if (decimal) {
+    strAmount = `${whole}.${decimal}`; 
+  } else {
+    strAmount = whole;
+  }
+
+  // Add $ and return
+  return "$" + strAmount;
+
+}
+
+
 //Lottie Animation
 
 
@@ -95,7 +124,7 @@ async function getLast52WeekClose(ticker) {
 let ticker  = localStorage.getItem('buyBtn');
 document.getElementById('stockName').innerText = ticker;
 let currentPrice = await getCurrentPrice(ticker);
-
+currentPrice  = formatDollars(currentPrice);
 document.getElementById('stockPrice').innerText = "current price: $" + currentPrice
 
 
