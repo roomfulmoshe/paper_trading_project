@@ -1,32 +1,3 @@
-function formatDollars(amount) {
-
-  // Convert to string
-  let strAmount = amount.toString();
-
-  // Split on decimal
-  let [whole, decimal] = strAmount.split(".");
-
-  // Add commas to whole 
-  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
-
-  // Limit decimal to 2 places
-  if (decimal) {
-    decimal = decimal.slice(0, 2);
-  }
-
-  // Add decimal back if needed
-  if (decimal) {
-    strAmount = `${whole}.${decimal}`; 
-  } else {
-    strAmount = whole;
-  }
-
-  // Add $ and return
-  return "$" + strAmount;
-
-}
-
-
 //Lottie Animation
 
 
@@ -124,7 +95,7 @@ async function getLast52WeekClose(ticker) {
 let ticker  = localStorage.getItem('buyBtn');
 document.getElementById('stockName').innerText = ticker;
 let currentPrice = await getCurrentPrice(ticker);
-currentPrice  = formatDollars(currentPrice);
+
 document.getElementById('stockPrice').innerText = "current price: $" + currentPrice
 
 
@@ -189,10 +160,7 @@ submitButton.addEventListener("click", function(event) {
 
   });
 
-  const monthNames = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
+
 
 //ticker
 //Stock chart animation
@@ -200,28 +168,34 @@ var closing_prices = null;
 getLast52WeekClose(ticker).then(prices => {
     closing_prices = prices;
     console.log(closing_prices);
-
+    const monthNames = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
     // Get current date
     const now = new Date();
-
+  
     // Array to hold months 
     const months = [];
-
+  
     // Loop 12 times  
     for (let i = 0; i < 12; i++) {
-
+  
       // Subtract i months from current month
       const monthIndex = now.getMonth() - i;
       
       // Handle wrap around
       const index = (12 + monthIndex) % 12;
-
+  
       // Get the month name 
       const month = monthNames[index];
-
+  
       // Add to months array
       months.unshift(month); 
     }
+
+
+
 
     const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
 
