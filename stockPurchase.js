@@ -91,7 +91,8 @@ async function getLast52WeekClose(ticker) {
       console.error(error);
     }
   
-  }
+}
+
 let ticker  = localStorage.getItem('buyBtn');
 document.getElementById('stockName').innerText = ticker;
 let currentPrice = await getCurrentPrice(ticker);

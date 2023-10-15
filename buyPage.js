@@ -118,39 +118,6 @@ async function displayUserInfo(assetData) {
   }
     document.getElementById('totalValue').innerText =  formatDollars(Math.floor(totalValue));
 
-    for (let i = 0; i < tickers.length; i++) {
-        const ticker = tickers[i];
-        
-        const row = document.createElement("tr");
-    
-        const tickerTd = document.createElement("td");
-        tickerTd.id = "ticker" + i;
-        tickerTd.textContent = ticker;
-    
-        const priceTd = document.createElement("td");
-        priceTd.id = "currentPrice" + i;
-        // add current price dynamically 
-        let number = await getCurrentPrice(ticker);
-        priceTd.textContent = formatDollars(number);
-
-        const purchaseTd = document.createElement("td");
-        purchaseTd.id = "purchase" + i;
-        
-        const purchaseBtn = document.createElement("button");
-        purchaseBtn.id = "buyButton" + i;
-        purchaseBtn.className = "buyButton";
-        purchaseBtn.textContent = "BUY";
-        purchaseTd.appendChild(purchaseBtn);
-        purchaseBtn.addEventListener("click", function() {
-            handleBuyBtnClick(i, ticker);  
-          });
-    
-        row.appendChild(tickerTd);
-        row.appendChild(priceTd); 
-        row.appendChild(purchaseTd);
-    
-        table.appendChild(row);
-    }
 }
 
 const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -186,3 +153,74 @@ if (loggedInUser) {
   // Handle the case where no user information is found (user not logged in)
   // You can redirect the user back to the login page or take appropriate action.
 }
+
+
+const searchBar = document.getElementById('searchBar');
+const stockListTable = document.getElementById('stockListTable');
+const stockList = tickers.slice(); // Create a copy of the original tickers array
+
+// Function to update the stock list based on the search input
+async function updateStockList() {
+  const searchText = searchBar.value.trim().toUpperCase();
+  const filteredStocks = stockList.filter(ticker => ticker.includes(searchText));
+
+  // Clear the table
+  stockListTable.innerHTML = '<tr><th>Stocks</th><th>Current Value</th><th>Purchase</th></tr>'
+//   // Populate the table with filtered stocks
+
+if (filteredStocks.length == 0)
+{
+  stockListTable.innerHTML = "<tr><th colspan=\"3\">No results found!</th></tr>";
+}
+else
+{
+  for (let i = 0; i < filteredStocks.length; i++) {
+      const ticker = filteredStocks[i];
+      
+      const row = document.createElement("tr");
+      const tickerTd = document.createElement("td");
+      tickerTd.id = "ticker" + i;
+      tickerTd.textContent = ticker;
+
+      const priceTd = document.createElement("td");
+      priceTd.id = "currentPrice" + i;
+      // add current price dynamically 
+      let number = getCurrentPrice(ticker);
+      number.then(price => {
+        priceTd.textContent = formatDollars(price);
+      });
+
+      const purchaseTd = document.createElement("td");
+      purchaseTd.id = "purchase" + i;
+      
+      const purchaseBtn = document.createElement("button");
+      purchaseBtn.id = "buyButton" + i;
+      purchaseBtn.className = "buyButton";
+      purchaseBtn.textContent = "BUY";
+      purchaseTd.appendChild(purchaseBtn);
+      purchaseBtn.addEventListener("click", function() {
+          handleBuyBtnClick(i, ticker);  
+        });
+
+      row.appendChild(tickerTd);
+      row.appendChild(priceTd); 
+      row.appendChild(purchaseTd);
+      stockListTable.appendChild(row);
+    }
+  }
+}
+
+
+// Add an event listener to the search bar for real-time search
+searchBar.addEventListener('keyup', function (event) {
+  if (event.key === 'Enter') {
+    updateStockList();
+  }
+});
+
+document.querySelector('.search').addEventListener('click', function (event) {
+    updateStockList();
+});
+
+// Initial population of the stock list table
+updateStockList();

@@ -46,8 +46,6 @@ body {
 
 
 
-
-
 .nav {
   position: fixed;
   background-color: #222;
@@ -343,7 +341,7 @@ div#greeting h1 {
   box-shadow: 0px 0px 10px rgba(87, 87, 87, 0.4);
   /* border: 2px solid #00ff0d; */
   justify-content: space-between;
-  min-height: 100vh;
+  min-height: 90vh;
   margin: 5%;
   margin-top: 1%;
   font-size: 1.2em;
@@ -384,13 +382,39 @@ div#greeting h1 {
 
 
 
+.searchBtn {
+  display: flex;
+  background-color: rgb(75, 70, 70);
+  height: 50px;
+  color:white;
+  border: rgb(200, 200, 200);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border-bottom: 6px solid rgb(40,20,20);
+  border-right: 6px solid rgb(40,20,20);
+  border-top: 3px solid rgb(110,20,20);
+  border-left: 3px solid rgb(140,20,20);
+}
 
+#searchBar, #searchBarImage {
+  background-color: rgb(75, 70, 70);
+  border-radius: 10px;
+}
 
+.input {
+  width:100%;
+  font-size: 1em;
+  padding-right: 30px;
+  padding-left:10px;
+  color:rgb(200, 200, 200);
+}
 
+.input::placeholder {
+  color:rgb(180, 180, 180);
+}
 
 table {
   border-collapse: collapse;
-
 }
 
 /* Style the table */
@@ -401,54 +425,19 @@ table {
   border-spacing: 0 40px;
 }
 
-/* Style table rows */
-.stocks tr {}
-
-
-
-/* Style the first row (headers) */
-.stocks tr:first-child {
-
-  background-color: #e0e0e000;
-  /* Background color for the header row */
-
-}
-
-
-/* Style the cells within the table */
-.stocks th,
-.stocks td {
-  padding: 10px;
-}
-
-/* Add rounded corners to table cells */
+/* Style table header */
 .stocks th {
   border-radius: 10px;
-  /* Adjust the radius as needed */
-
+  font-size: 1.6em;
 }
-
-.stock tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-
 
 .stocks td {
   background-color: #0dff00;
   color: black;
   font-size: 130%;
-  animation: glow 1.5s infinite alternate;
-
+  animation: glow 1.5s infinite alternate, widen 0.5s;
+  padding: 10px;
 }
-
-
-
-.stocks tr:hover {
-  background-color: #0dff00;
-  transition: background-color 0.5s ease-in;
-}
-
 
 .stocks td:first-child {
   border-top-left-radius: 100px;
@@ -460,13 +449,14 @@ table {
   border-bottom-Right-radius: 50px;
 }
 
+tr:not(:first-child) {
+  animation: fadeIn 1s;
+}
 
-
-.stocks tr {}
-
-
-
-
+@keyframes widen {
+  0% { padding: 5px; }
+  100% { padding: 10px; }
+}
 
 
 
