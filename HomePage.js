@@ -275,12 +275,6 @@ if (loggedInUser) {
     }
   // Use the user information to personalize the dashboard content or perform actions.
   // For example, display the user's email on the dashboard.
-  userEmail = getEmailUsername(userEmail);
-  const element = document.getElementById('displayEmail');
-
-  // Change the color 
-  element.style.color = "#0dff00";
-  document.getElementById('displayEmail').innerHTML = "<a>Hello,  " + userEmail + "</a>";
   document.getElementById('currentDate').innerText = getCurrentDateString();
 
 } else {

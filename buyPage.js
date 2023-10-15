@@ -140,11 +140,7 @@ if (loggedInUser) {
   const userUID = loggedInUser.uid;
 
   userEmail = getEmailUsername(userEmail);
-  const element = document.getElementById('displayEmail');
 
-  // Change the color 
-  element.style.color = "#0dff00";
-  document.getElementById('displayEmail').innerHTML = "<a>Hello,  " + userEmail +"</a>";
     // Reference to the user's assets
     const assetsRef = ref(database, 'user_assets/' + userUID + '/assets');
     // Fetch the data
@@ -290,7 +286,7 @@ searchBar1.addEventListener("keyup", async function(event) {
 
     let number = await getCurrentPrice(searchValue1);
     number = formatDollars(number);
-    document.getElementById('displayStockName').innerHTML = `Company ticker: ${searchValue1} <p>Latest Price ${number}</p>`;
+    document.getElementById('displayStockName').innerHTML = `${searchValue1.toUpperCase()} <p>Latest Price ${number}</p>`;
 
     var chartCanvas = document.getElementById('stockChart1');
 
@@ -429,7 +425,7 @@ searchBar2.addEventListener("keyup", async function(event) {
     var chartCanvas = document.getElementById('stockChart2');
     let number = await getCurrentPrice(searchValue2);
     number = formatDollars(number);
-    document.getElementById('displayStockName2').innerHTML = `Company ticker: ${searchValue2} <p>Latest Price ${number}</p>`;
+    document.getElementById('displayStockName2').innerHTML = `${searchValue2.toUpperCase()} <p>Latest Price ${number}</p>`;
 
     // Check if a chart exists and destroy it
     if (chartCanvas) {
@@ -768,3 +764,17 @@ getLast52WeekClose('SPY').then(prices => {
   stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
   stockChart.update();
 });
+
+
+
+//Sticky nav bar
+const nav = document.querySelector('.nav')
+window.addEventListener('scroll', fixNav)
+
+function fixNav() {
+    if(window.scrollY > nav.offsetHeight + 150) {
+        nav.classList.add('active')
+    } else {
+        nav.classList.remove('active')
+    }
+}
