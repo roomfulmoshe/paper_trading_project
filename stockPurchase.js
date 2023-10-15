@@ -201,7 +201,29 @@ getLast52WeekClose(ticker).then(prices => {
     closing_prices = prices;
     console.log(closing_prices);
 
-    const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
+    // Get current date
+    const now = new Date();
+
+    // Array to hold months 
+    const months = [];
+
+    // Loop 12 times  
+    for (let i = 0; i < 12; i++) {
+
+      // Subtract i months from current month
+      const monthIndex = now.getMonth() - i;
+      
+      // Handle wrap around
+      const index = (12 + monthIndex) % 12;
+
+      // Get the month name 
+      const month = monthNames[index];
+
+      // Add to months array
+      months.unshift(month); 
+    }
+
+    const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
 
     // Calculate the starting y-axis value to the nearest 10th
     const minY = Math.floor(Math.min(...prices) / 10) * 10;

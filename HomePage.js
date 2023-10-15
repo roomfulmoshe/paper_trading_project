@@ -40,6 +40,24 @@ lottie.loadAnimation({
 // toggle.addEventListener('click', () => nav2.classList.toggle('active'))
 
 
+function getLastTwelveMonths() {
+
+  const monthNames = ["January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"];
+  
+  const d = new Date();
+  const thisMonth = d.getMonth();
+
+  const months = [];
+
+  for (let i = 0; i < 12; i++) {
+    const index = (thisMonth - i + 12) % 12;
+    months.unshift(monthNames[index]);
+  }
+
+  return months;
+
+}
 
 
 // Import the functions you need from the SDKs you need
@@ -303,81 +321,108 @@ getLast52WeekClose('SPY').then(prices => {
   // ANIMATION FOR CHART 1 
   const ctx = document.getElementById('stockChart1').getContext('2d');
   // Simulated data for stock prices
-  const stockData = {
-  labels: Array.from({ length: 52 }, (_, i) => (i % 4 === 0 ? 'Month ' + (i / 4) : '')),
-  datasets: [
-      {
-          label: 'Stock Price',
-          data: prices, // Simulated data
-          borderColor: 'green', // Initial color
-          borderWidth: 3, // Set line width
-          borderJoinStyle: 'round', // Soften the edges
-          fill: false,
-          pointRadius: 0, // Make data points invisible
-      },
-  ],
-  };
+  const monthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  // Get current date
+  const now = new Date();
 
-  // Modify the line color based on data points
-  const data = stockData.datasets[0].data;
+  // Array to hold months 
+  const months = [];
 
-  if (data[data.length - 1] < data[data.length - 2]) {
-  stockData.datasets[0].borderColor = 'red';
+  // Loop 12 times  
+  for (let i = 0; i < 12; i++) {
 
-  } else stockData.datasets[0].borderColor = 'green';
+    // Subtract i months from current month
+    const monthIndex = now.getMonth() - i;
+    
+    // Handle wrap around
+    const index = (12 + monthIndex) % 12;
 
-  // Create the chart
+    // Get the month name 
+    const month = monthNames[index];
 
+    // Add to months array
+    months.unshift(month); 
+  }
 
-  const stockChart = new Chart(ctx, {
-  type: 'line',
-  data: stockData,
-  options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-          x: {
-              beginAtZero: true,
-              grid: {
-                  display: false, // Remove vertical grid lines
-              },
-              ticks: {
-                  color: 'white', // Set x-axis label color to white
-              },
-          },
-          y: {
-              beginAtZero: true,
-              stepSize: 10,
-              grid: {
-                  color: 'white', // Set y-axis grid line color to white
-              },
-              ticks: {
-                  color: 'white', // Set y-axis label color to white
-              },
-          },
-      },
-      plugins: {
-          legend: {
-              display: false,
-          },
-          tooltip: {
-              enabled: true,
-              position: 'nearest',
-          },
-      },
-  },
+   // Replace numeric labels with month names
+   const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
+    
+   // Calculate the starting y-axis value to the nearest 10th
+   const minY = Math.floor(Math.min(...prices) / 10) * 10;
+ 
+   // Simulated data for stock prices
+   const stockData = {
+     labels: labels, // Use month names
+     datasets: [
+       {
+         label: 'SPY',
+         data: prices, // Actual data
+         borderColor: 'green', // Initial color
+         borderWidth: 3, // Set line width
+         borderJoinStyle: 'round', // Soften the edges
+         fill: false,
+         pointRadius: 0, // Make data points invisible
+       },
+     ],
+   };
+ 
+   // Modify the line color based on data points
+   const data = stockData.datasets[0].data;
+ 
+   if (data[data.length - 1] < data[data.length - 2]) {
+     stockData.datasets[0].borderColor = 'red';
+   } else {
+     stockData.datasets[0].borderColor = 'green';
+   }
+ 
+   // Create the chart
+   const stockChart = new Chart(ctx, {
+     type: 'line',
+     data: stockData,
+     options: {
+       responsive: true,
+       maintainAspectRatio: false,
+       scales: {
+         x: {
+           beginAtZero: true,
+           grid: {
+             display: false, // Remove vertical grid lines
+           },
+           ticks: {
+             color: 'white', // Set x-axis label color to white
+           },
+         },
+         y: {
+           beginAtZero: false,
+           suggestedMin: minY, // Set the suggested minimum to the nearest 10th
+           stepSize: 10,
+           grid: {
+             color: 'white', // Set y-axis grid line color to white
+           },
+           ticks: {
+             color: 'white', // Set y-axis label color to white
+           },
+         },
+       },
+       plugins: {
+         legend: {
+           display: false,
+         },
+         tooltip: {
+           enabled: true,
+           position: 'nearest',
+         },
+       },
+     },
+   });
+ 
+   // Set the horizontal grid lines to 10% opacity
+   stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
+   stockChart.update();
   });
-
-
-
-
-  // Set the horizontal grid lines to 10% opacity
-  stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
-  stockChart.update();
-
-
-
-});
 
 
 
@@ -387,76 +432,106 @@ getLast52WeekClose('QQQ').then(prices => {
   console.log(prices); // latest 52 week prices
   //Animation for Chart 2
   const ctx1 = document.getElementById('stockChart2').getContext('2d');
+  
   // Simulated data for stock prices
-  const stockData1 = {
-  labels: Array.from({ length: 52 }, (_, i) => (i % 4 === 0 ? 'Month ' + (i / 4) : '')),
-  datasets: [
-      {
-          label: 'Stock Price2',
-          data:prices, // Simulated data
-          borderColor: 'green', // Initial color
-          borderWidth: 3, // Set line width
-          borderJoinStyle: 'round', // Soften the edges
-          fill: false,
-          pointRadius: 0, // Make data points invisible
-      },
-  ],
-  };
+  const monthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  // Get current date
+  const now = new Date();
 
-  // Modify the line color based on data points
-  const data1 = stockData1.datasets[0].data;
+  // Array to hold months 
+  const months = [];
 
-  if (data1[data1.length - 1] > data1[data1.length - 2]) {
-  stockData1.datasets[0].borderColor = 'red'; 
-  } 
+  // Loop 12 times  
+  for (let i = 0; i < 12; i++) {
 
-  // Create the chart
+    // Subtract i months from current month
+    const monthIndex = now.getMonth() - i;
+    
+    // Handle wrap around
+    const index = (12 + monthIndex) % 12;
 
+    // Get the month name 
+    const month = monthNames[index];
 
-  const stockChart1 = new Chart(ctx1, {
-  type: 'line',
-  data: stockData1,
-  options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-          x: {
-              beginAtZero: true,
-              grid: {
-                  display: false, // Remove vertical grid lines
-              },
-              ticks: {
-                  color: 'white', // Set x-axis label color to white
-              },
-          },
-          y: {
-              beginAtZero: true,
-              stepSize: 10,
-              grid: {
-                  color: 'white', // Set y-axis grid line color to white
-              },
-              ticks: {
-                  color: 'white', // Set y-axis label color to white
-              },
-          },
-      },
-      plugins: {
-          legend: {
-              display: false,
-          },
-          tooltip: {
-              enabled: true,
-              position: 'nearest',
-          },
-      },
-  },
-  });
-
-
-
-
-  // Set the horizontal grid lines to 10% opacity
-  stockChart1.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
-  stockChart1.update();
-
+    // Add to months array
+    months.unshift(month); 
+  }
+   // Replace numeric labels with month names
+   const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
+    
+   // Calculate the starting y-axis value to the nearest 10th
+   const minY = Math.floor(Math.min(...prices) / 10) * 10;
+ 
+   // Simulated data for stock prices
+   const stockData = {
+     labels: labels, // Use month names
+     datasets: [
+       {
+         label: 'QQQ',
+         data: prices, // Actual data
+         borderColor: 'green', // Initial color
+         borderWidth: 3, // Set line width
+         borderJoinStyle: 'round', // Soften the edges
+         fill: false,
+         pointRadius: 0, // Make data points invisible
+       },
+     ],
+   };
+ 
+   // Modify the line color based on data points
+   const data = stockData.datasets[0].data;
+ 
+   if (data[data.length - 1] < data[data.length - 2]) {
+     stockData.datasets[0].borderColor = 'red';
+   } else {
+     stockData.datasets[0].borderColor = 'green';
+   }
+ 
+   // Create the chart
+   const stockChart = new Chart(ctx1, {
+     type: 'line',
+     data: stockData,
+     options: {
+       responsive: true,
+       maintainAspectRatio: false,
+       scales: {
+         x: {
+           beginAtZero: true,
+           grid: {
+             display: false, // Remove vertical grid lines
+           },
+           ticks: {
+             color: 'white', // Set x-axis label color to white
+           },
+         },
+         y: {
+           beginAtZero: false,
+           suggestedMin: minY, // Set the suggested minimum to the nearest 10th
+           stepSize: 10,
+           grid: {
+             color: 'white', // Set y-axis grid line color to white
+           },
+           ticks: {
+             color: 'white', // Set y-axis label color to white
+           },
+         },
+       },
+       plugins: {
+         legend: {
+           display: false,
+         },
+         tooltip: {
+           enabled: true,
+           position: 'nearest',
+         },
+       },
+     },
+   });
+ 
+   // Set the horizontal grid lines to 10% opacity
+   stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
+   stockChart.update();
 });

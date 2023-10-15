@@ -306,11 +306,32 @@ searchBar1.addEventListener("keyup", async function(event) {
 
     getLast52WeekClose(searchValue1).then(prices => {
       console.log(prices); // latest 52-week prices
-    
+      
+        // Get current date
+        const now = new Date();
+
+        // Array to hold months 
+        const months = [];
+
+        // Loop 12 times  
+        for (let i = 0; i < 12; i++) {
+
+          // Subtract i months from current month
+          const monthIndex = now.getMonth() - i;
+          
+          // Handle wrap around
+          const index = (12 + monthIndex) % 12;
+
+          // Get the month name 
+          const month = monthNames[index];
+
+          // Add to months array
+          months.unshift(month); 
+        }
 
     
       // Replace numeric labels with month names
-      const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
+      const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
     
       // Calculate the starting y-axis value to the nearest 10th
       const minY = Math.floor(Math.min(...prices) / 10) * 10;
@@ -422,10 +443,31 @@ searchBar2.addEventListener("keyup", async function(event) {
     getLast52WeekClose(searchValue2).then(prices => {
       console.log(prices); // latest 52-week prices
     
-    
+      // Get current date
+      const now = new Date();
+
+      // Array to hold months 
+      const months = [];
+
+      // Loop 12 times  
+      for (let i = 0; i < 12; i++) {
+
+        // Subtract i months from current month
+        const monthIndex = now.getMonth() - i;
+        
+        // Handle wrap around
+        const index = (12 + monthIndex) % 12;
+
+        // Get the month name 
+        const month = monthNames[index];
+
+        // Add to months array
+        months.unshift(month); 
+      }
+
     
       // Replace numeric labels with month names
-      const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
+      const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
     
       // Calculate the starting y-axis value to the nearest 10th
       const minY = Math.floor(Math.min(...prices) / 10) * 10;
@@ -517,11 +559,31 @@ document.getElementById('displayStockName').innerHTML = `QQQ <p>Latest Price ${n
 
 getLast52WeekClose('QQQ').then(prices => {
 console.log(prices); // latest 52-week prices
+// Get current date
+const now = new Date();
 
+// Array to hold months 
+const months = [];
+
+// Loop 12 times  
+for (let i = 0; i < 12; i++) {
+
+  // Subtract i months from current month
+  const monthIndex = now.getMonth() - i;
+  
+  // Handle wrap around
+  const index = (12 + monthIndex) % 12;
+
+  // Get the month name 
+  const month = monthNames[index];
+
+  // Add to months array
+  months.unshift(month); 
+}
 
 
 // Replace numeric labels with month names
-const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
+const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
 
 // Calculate the starting y-axis value to the nearest 10th
 const minY = Math.floor(Math.min(...prices) / 10) * 10;
@@ -604,10 +666,31 @@ stockChart1.update();
 getLast52WeekClose('SPY').then(prices => {
   console.log(prices); // latest 52-week prices
 
+  // Get current date
+  const now = new Date();
+
+  // Array to hold months 
+  const months = [];
+
+  // Loop 12 times  
+  for (let i = 0; i < 12; i++) {
+
+    // Subtract i months from current month
+    const monthIndex = now.getMonth() - i;
+    
+    // Handle wrap around
+    const index = (12 + monthIndex) % 12;
+
+    // Get the month name 
+    const month = monthNames[index];
+
+    // Add to months array
+    months.unshift(month); 
+  }
 
 
   // Replace numeric labels with month names
-  const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? monthNames[Math.floor(i / 4)] : ''));
+  const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
 
   // Calculate the starting y-axis value to the nearest 10th
   const minY = Math.floor(Math.min(...prices) / 10) * 10;
