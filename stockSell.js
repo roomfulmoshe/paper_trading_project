@@ -48,31 +48,7 @@ lottie.loadAnimation({
   path: "https://lottie.host/4bcddfb6-7284-4937-a41e-0d930e3faca0/A1AKLEELew.json", // Provide the URL of the animation JSON
 });
 
-
-//TODO: create function that returns last 52 week prices as an aray
-async function getLast52WeekClose(ticker) {
-
-    // Use a valid API key 
-    const API_KEY = 'EN3735MN44LA7F35';
-    
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`;
-  
-    try {
-  
-      const response = await axios.get(url);
-  
-      const weeklyClosePrices = Object.values(response.data['Weekly Adjusted Time Series'])
-        .map(day => Number(day['5. adjusted close']))
-        .reverse();
-  
-      // Slice last 52 weeks
-      return weeklyClosePrices.slice(-52);
-  
-    } catch (error) {
-      console.error(error);
-    }
-  
-}
+import { getLast52WeekClose} from './stocksAPI.js';
 
 
 

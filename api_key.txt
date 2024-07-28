@@ -1,0 +1,33 @@
+PAID PREMIUM API KEY(ALPHA VANTAGE):
+EN3735MN44LA7F35
+FREE ALPHA VANTAGE API KEY:
+ALVUPDZ6TOR4O1DV
+
+
+
+
+#########################################FPM API###################################
+FPM FREE API KEY:
+OBjYxQg3fHK1g96r1wfepOixWNovCA6I
+
+
+https://site.financialmodelingprep.com/developer/docs
+
+ENDPOINTS:
+
+Daily Chart EOD API
+The FMP Daily Chart endpoint provides daily stock data for a specified company, including opening, high, low, and closing prices, with a default limit of 5 years of historical data. To access data beyond this limit, use the from and to parameters for custom date ranges, each with a 5-year limit.
+
+Full Quote API
+This endpoint gives you the latest bid and ask prices for a stock, as well as the volume and last trade price in real time.
+Simple Quote API
+Get a simple quote for a stock, including the price, change, and volume. This endpoint can be used to get a quick snapshot of a stock's performance or to calculate its valuation.
+
+
+Screener (Stock) API
+Find stocks that meet your investment criteria with our Screener (Stock) endpoint. This endpoint allows you to search for stocks based on various criteria, such as market cap, price, volume, beta, sector, and country.
+
+
+Analyst Recommendation API
+The FMP Analyst Recommendation endpoint provides analyst recommendations for buying, selling, or holding a company's stock. Investors can use this information to get a sense of what analysts think of a company's stock and to make informed investment decisions.
+######################################################################################

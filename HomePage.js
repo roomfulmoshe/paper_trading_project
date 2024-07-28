@@ -1,3 +1,30 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Import individual functions directly
+import { getLast52WeekClose, getCurrentPrice } from './stocksAPI.js';
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCRXoWAyHb9v9x8P75Cp9BdEfCHjvHJJn8",
+    authDomain: "paper-trading-simulator-f71ce.firebaseapp.com",
+    databaseURL: "https://paper-trading-simulator-f71ce-default-rtdb.firebaseio.com",
+    projectId: "paper-trading-simulator-f71ce",
+    storageBucket: "paper-trading-simulator-f71ce.appspot.com",
+    messagingSenderId: "631191317349",
+    appId: "1:631191317349:web:4c2bb236136ccf58f7cf8c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth();
+
+
 
 //Sticky nav bar
 const nav = document.querySelector('.nav')
@@ -16,7 +43,6 @@ function getEmailUsername(email) {
   if (index === -1) {
     return email; 
   }
-
   return email.substring(0, index);
 }
 
@@ -58,30 +84,6 @@ function getLastTwelveMonths() {
   return months;
 
 }
-
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCRXoWAyHb9v9x8P75Cp9BdEfCHjvHJJn8",
-    authDomain: "paper-trading-simulator-f71ce.firebaseapp.com",
-    databaseURL: "https://paper-trading-simulator-f71ce-default-rtdb.firebaseio.com",
-    projectId: "paper-trading-simulator-f71ce",
-    storageBucket: "paper-trading-simulator-f71ce.appspot.com",
-    messagingSenderId: "631191317349",
-    appId: "1:631191317349:web:4c2bb236136ccf58f7cf8c"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-const auth = getAuth();
 
 function getCurrentDateString() {
   const currentDate = new Date();
@@ -128,7 +130,7 @@ async function sellButtonClickHandler(ticker, shares, currentPrice){
   localStorage.setItem('SharesAvail', shares);
   localStorage.setItem('sellCurrentPrice', currentPrice);
 
-  console.log('selling ' + ticker + 'shares availabk' + shares);
+  console.log('selling ' + ticker + 'shares availabe' + shares);
   window.location.href = 'stockSell.html';
 }
 
@@ -137,22 +139,6 @@ async function sellButtonClickHandler(ticker, shares, currentPrice){
 
 // import axios from 'axios';
 
-
-async function getCurrentPrice(ticker) {
-  const API_KEY = 'EN3735MN44LA7F35';
-  const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${API_KEY}`;
-  
-  try {
-    const response = await axios.get(url);
-    console.log(response.data);
-    const price = response.data['Global Quote']['05. price'];
-    console.log(price);
-    return price;
-  } catch (error) {
-    console.error(error);
-    throw error; // Re-throw the error to handle it elsewhere if needed
-  }
-}
 
 async function displayUserInfo(assetData) {
   //table to display user's stocks
@@ -284,32 +270,6 @@ if (loggedInUser) {
 }
 
 
-//TODO: create function that returns last 52 week prices as an aray
-async function getLast52WeekClose(ticker) {
-
-  // Use a valid API key 
-  const API_KEY = 'EN3735MN44LA7F35';
-  
-  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`;
-
-  try {
-
-    const response = await axios.get(url);
-
-    const weeklyClosePrices = Object.values(response.data['Weekly Adjusted Time Series'])
-      .map(day => Number(day['5. adjusted close']))
-      .reverse();
-
-    // Slice last 52 weeks
-    return weeklyClosePrices.slice(-52);
-
-  } catch (error) {
-    console.error(error);
-  }
-
-}
-
-
 getLast52WeekClose('SPY').then(prices => {
   console.log(prices); // latest 52 week prices
   // ANIMATION FOR CHART 1 
@@ -366,7 +326,7 @@ getLast52WeekClose('SPY').then(prices => {
    // Modify the line color based on data points
    const data = stockData.datasets[0].data;
  
-   if (data[data.length - 1] < data[data.length - 2]) {
+   if (data[data.length - 1] < data[0]) {
      stockData.datasets[0].borderColor = 'red';
    } else {
      stockData.datasets[0].borderColor = 'green';
@@ -478,7 +438,7 @@ getLast52WeekClose('QQQ').then(prices => {
    // Modify the line color based on data points
    const data = stockData.datasets[0].data;
  
-   if (data[data.length - 1] < data[data.length - 2]) {
+   if (data[data.length - 1] < data[0]) {
      stockData.datasets[0].borderColor = 'red';
    } else {
      stockData.datasets[0].borderColor = 'green';
@@ -542,6 +502,7 @@ table.addEventListener('scroll', animateTableRows);
 window.addEventListener('scroll', () => {
   animateTableRows();
 });
+
 const tableTop = table.getBoundingClientRect().top;
 
 

@@ -1,6 +1,4 @@
 //Lottie Animation
-
-
 // Get the container element where the animation will be displayed
 const container = document.querySelector(".lottie-container");
 

@@ -1,3 +1,5 @@
+//TODO: Work on chart showing green for up and red for down. Then be able to search for any ticker in the world
+import { getLast52WeekClose, getCurrentPrice } from './stocksAPI.js';
 // Get the container element where the animation will be displayed
 const container = document.querySelector(".lottie-container");
 
@@ -89,22 +91,6 @@ function formatDollars(amount) {
 function handleBuyBtnClick(stockIndex, stockTicker) {
     localStorage.setItem("buyBtn", stockTicker);
     window.location.href = "stockPurchase.html";
-}
-
-//The following code is used to get the current price for a given ticker:
-async function getCurrentPrice(ticker) {
-  const API_KEY = 'EN3735MN44LA7F35';
-  const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${API_KEY}`;
-  
-  try {
-    const response = await axios.get(url);
-    console.log(response.data);
-    const price = response.data['Global Quote']['05. price'];
-    return price;
-  } catch (error) {
-    console.error(error);
-    throw error; // Re-throw the error to handle it elsewhere if needed
-  }
 }
 
 async function displayUserInfo(assetData) {
@@ -239,31 +225,6 @@ document.querySelector('.search').addEventListener('click', function (event) {
 updateStockList();
 
 
-
-//TODO: create function that returns last 52 week prices as an aray
-async function getLast52WeekClose(ticker) {
-
-  // Use a valid API key 
-  const API_KEY = 'EN3735MN44LA7F35';
-
-  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`;
-
-  try {
-
-    const response = await axios.get(url);
-
-    const weeklyClosePrices = Object.values(response.data['Weekly Adjusted Time Series'])
-      .map(day => Number(day['5. adjusted close']))
-      .reverse();
-
-    // Slice last 52 weeks
-    return weeklyClosePrices.slice(-52);
-
-  } catch (error) {
-    console.error(error);
-  }
-
-}
 
 
   // Define an array of month names
@@ -606,7 +567,7 @@ const stockData1 = {
 // Modify the line color based on data points
 const data1 = stockData1.datasets[0].data;
 
-if (data1[data1.length - 1] > data1[data1.length - 2]) {
+if (data[0] > data[data.length - 1]) {
   stockData1.datasets[0].borderColor = 'red';
 }
 
@@ -713,7 +674,7 @@ getLast52WeekClose('SPY').then(prices => {
   // Modify the line color based on data points
   const data = stockData.datasets[0].data;
 
-  if (data[data.length - 1] < data[data.length - 2]) {
+  if (data[0] > data[data.length - 1]) {
     stockData.datasets[0].borderColor = 'red';
   } else {
     stockData.datasets[0].borderColor = 'green';
