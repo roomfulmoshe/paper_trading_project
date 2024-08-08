@@ -6,7 +6,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, on
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Import individual functions directly
-import { getLast52WeekClose, getCurrentPrice } from './stocksAPI.js';
+import { getLast52WeekClose, getCurrentPrice, formatDollars, getCurrentDateString, getEmailUsername, getMonths, createChart } from './stocksAPI.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -38,13 +38,6 @@ function fixNav() {
     }
 }
 
-function getEmailUsername(email) {
-  const index = email.indexOf('@');
-  if (index === -1) {
-    return email; 
-  }
-  return email.substring(0, index);
-}
 
 // Get the container element where the animation will be displayed
 const container = document.querySelector(".lottie-container");
@@ -66,64 +59,6 @@ lottie.loadAnimation({
 // toggle.addEventListener('click', () => nav2.classList.toggle('active'))
 
 
-function getLastTwelveMonths() {
-
-  const monthNames = ["January", "February", "March", "April", "May", "June", 
-    "July", "August", "September", "October", "November", "December"];
-  
-  const d = new Date();
-  const thisMonth = d.getMonth();
-
-  const months = [];
-
-  for (let i = 0; i < 12; i++) {
-    const index = (thisMonth - i + 12) % 12;
-    months.unshift(monthNames[index]);
-  }
-
-  return months;
-
-}
-
-function getCurrentDateString() {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-  const day = String(currentDate.getDate()).padStart(2, '0');
-  
-  // Create a string in the format YYYY-MM-DD (e.g., "2023-10-09")
-  const dateString = `${year}-${month}-${day}`;
-  
-  return dateString;
-}
-
-function formatDollars(amount) {
-
-  // Convert to string
-  let strAmount = amount.toString();
-
-  // Split on decimal
-  let [whole, decimal] = strAmount.split(".");
-
-  // Add commas to whole 
-  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
-
-  // Limit decimal to 2 places
-  if (decimal) {
-    decimal = decimal.slice(0, 2);
-  }
-
-  // Add decimal back if needed
-  if (decimal) {
-    strAmount = `${whole}.${decimal}`; 
-  } else {
-    strAmount = whole;
-  }
-
-  // Add $ and return
-  return "$" + strAmount;
-
-}
 
 async function sellButtonClickHandler(ticker, shares, currentPrice){
   localStorage.setItem('sellTicker', ticker);
@@ -275,31 +210,8 @@ getLast52WeekClose('SPY').then(prices => {
   // ANIMATION FOR CHART 1 
   const ctx = document.getElementById('stockChart1').getContext('2d');
   // Simulated data for stock prices
-  const monthNames = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
-  // Get current date
-  const now = new Date();
 
-  // Array to hold months 
-  const months = [];
-
-  // Loop 12 times  
-  for (let i = 0; i < 12; i++) {
-
-    // Subtract i months from current month
-    const monthIndex = now.getMonth() - i;
-    
-    // Handle wrap around
-    const index = (12 + monthIndex) % 12;
-
-    // Get the month name 
-    const month = monthNames[index];
-
-    // Add to months array
-    months.unshift(month); 
-  }
+  const months = getMonths();
 
    // Replace numeric labels with month names
    const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
@@ -332,46 +244,9 @@ getLast52WeekClose('SPY').then(prices => {
      stockData.datasets[0].borderColor = 'green';
    }
  
-   // Create the chart
-   const stockChart = new Chart(ctx, {
-     type: 'line',
-     data: stockData,
-     options: {
-       responsive: true,
-       maintainAspectRatio: false,
-       scales: {
-         x: {
-           beginAtZero: true,
-           grid: {
-             display: false, // Remove vertical grid lines
-           },
-           ticks: {
-             color: 'white', // Set x-axis label color to white
-           },
-         },
-         y: {
-           beginAtZero: false,
-           suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-           stepSize: 10,
-           grid: {
-             color: 'white', // Set y-axis grid line color to white
-           },
-           ticks: {
-             color: 'white', // Set y-axis label color to white
-           },
-         },
-       },
-       plugins: {
-         legend: {
-           display: false,
-         },
-         tooltip: {
-           enabled: true,
-           position: 'nearest',
-         },
-       },
-     },
-   });
+
+   // Create the chart createChart(stockData, ctx, minY)
+   const stockChart = createChart(stockData, ctx, minY);
  
    // Set the horizontal grid lines to 10% opacity
    stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
@@ -387,32 +262,8 @@ getLast52WeekClose('QQQ').then(prices => {
   //Animation for Chart 2
   const ctx1 = document.getElementById('stockChart2').getContext('2d');
   
-  // Simulated data for stock prices
-  const monthNames = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
-  // Get current date
-  const now = new Date();
 
-  // Array to hold months 
-  const months = [];
-
-  // Loop 12 times  
-  for (let i = 0; i < 12; i++) {
-
-    // Subtract i months from current month
-    const monthIndex = now.getMonth() - i;
-    
-    // Handle wrap around
-    const index = (12 + monthIndex) % 12;
-
-    // Get the month name 
-    const month = monthNames[index];
-
-    // Add to months array
-    months.unshift(month); 
-  }
+  const months = getMonths();
    // Replace numeric labels with month names
    const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
     
@@ -445,45 +296,7 @@ getLast52WeekClose('QQQ').then(prices => {
    }
  
    // Create the chart
-   const stockChart = new Chart(ctx1, {
-     type: 'line',
-     data: stockData,
-     options: {
-       responsive: true,
-       maintainAspectRatio: false,
-       scales: {
-         x: {
-           beginAtZero: true,
-           grid: {
-             display: false, // Remove vertical grid lines
-           },
-           ticks: {
-             color: 'white', // Set x-axis label color to white
-           },
-         },
-         y: {
-           beginAtZero: false,
-           suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-           stepSize: 10,
-           grid: {
-             color: 'white', // Set y-axis grid line color to white
-           },
-           ticks: {
-             color: 'white', // Set y-axis label color to white
-           },
-         },
-       },
-       plugins: {
-         legend: {
-           display: false,
-         },
-         tooltip: {
-           enabled: true,
-           position: 'nearest',
-         },
-       },
-     },
-   });
+   const stockChart = createChart(stockData, ctx1, minY);
  
    // Set the horizontal grid lines to 10% opacity
    stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';

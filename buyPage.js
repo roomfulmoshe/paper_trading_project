@@ -1,5 +1,5 @@
 //TODO: Work on chart showing green for up and red for down. Then be able to search for any ticker in the world
-import { getLast52WeekClose, getCurrentPrice } from './stocksAPI.js';
+import { getLast52WeekClose, getCurrentPrice, createChart, getMonths } from './stocksAPI.js';
 // Get the container element where the animation will be displayed
 const container = document.querySelector(".lottie-container");
 
@@ -35,7 +35,7 @@ const database = getDatabase(app);
 const auth = getAuth();
 
 
-const tickers = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "TSLA", "META", "BRK.B", "LLY", "V", "UNH", "TSM", "XOM", "WMT", "JPM", "NVO", "JNJ", "MA", "AVGO", "PG", "CVX", "ORCL", "HD", "MRK", "ABBV", "COST", "ADBE", "TM", "ASML", "KO"];
+const tickers = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "TSLA", "META", "LLY", "V", "UNH", "TSM", "XOM", "WMT", "JPM", "NVO", "JNJ", "MA", "AVGO", "PG", "CVX", "ORCL", "HD", "MRK", "ABBV", "COST", "ADBE", "TM", "ASML", "KO"];
 
 
 function getEmailUsername(email) {
@@ -227,12 +227,9 @@ updateStockList();
 
 
 
-  // Define an array of month names
-  const monthNames = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
 
+
+////////////////////////////////////////////////START OF CHARTS///////////////////////////////////////////////////////////////////////////
 //get input for chart1
 // Get the input element by its ID
 var searchBar1 = document.getElementById("searchBar1");
@@ -262,29 +259,13 @@ searchBar1.addEventListener("keyup", async function(event) {
     // Do something with the searchValue
 
     getLast52WeekClose(searchValue1).then(prices => {
-      console.log(prices); // latest 52-week prices
+      console.log(searchValue1 + "CURRENT PRICES: "+ prices); // latest 52-week prices
       
         // Get current date
         const now = new Date();
 
         // Array to hold months 
-        const months = [];
-
-        // Loop 12 times  
-        for (let i = 0; i < 12; i++) {
-
-          // Subtract i months from current month
-          const monthIndex = now.getMonth() - i;
-          
-          // Handle wrap around
-          const index = (12 + monthIndex) % 12;
-
-          // Get the month name 
-          const month = monthNames[index];
-
-          // Add to months array
-          months.unshift(month); 
-        }
+        const months = getMonths();
 
     
       // Replace numeric labels with month names
@@ -314,53 +295,14 @@ searchBar1.addEventListener("keyup", async function(event) {
     
       // Modify the line color based on data points
       const data = stockData.datasets[0].data;
-    
-      if (data[data.length - 1] < data[data.length - 2]) {
-        stockData.datasets[0].borderColor = 'red';
-      } else {
-        stockData.datasets[0].borderColor = 'green';
-      }
+      if (data[data.length - 1] < data[0]) {
+          stockData.datasets[0].borderColor = 'red';
+        } else {
+          stockData.datasets[0].borderColor = 'green';
+        }
     
       // Create the chart
-      const stockChart = new Chart(ctx, {
-        type: 'line',
-        data: stockData,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              beginAtZero: true,
-              grid: {
-                display: false, // Remove vertical grid lines
-              },
-              ticks: {
-                color: 'white', // Set x-axis label color to white
-              },
-            },
-            y: {
-              beginAtZero: false,
-              suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-              stepSize: 10,
-              grid: {
-                color: 'white', // Set y-axis grid line color to white
-              },
-              ticks: {
-                color: 'white', // Set y-axis label color to white
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              display: false,
-            },
-            tooltip: {
-              enabled: true,
-              position: 'nearest',
-            },
-          },
-        },
-      });
+      const stockChart = createChart(stockData, ctx, minY);
     
       // Set the horizontal grid lines to 10% opacity
       stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
@@ -404,23 +346,7 @@ searchBar2.addEventListener("keyup", async function(event) {
       const now = new Date();
 
       // Array to hold months 
-      const months = [];
-
-      // Loop 12 times  
-      for (let i = 0; i < 12; i++) {
-
-        // Subtract i months from current month
-        const monthIndex = now.getMonth() - i;
-        
-        // Handle wrap around
-        const index = (12 + monthIndex) % 12;
-
-        // Get the month name 
-        const month = monthNames[index];
-
-        // Add to months array
-        months.unshift(month); 
-      }
+      const months = getMonths();
 
     
       // Replace numeric labels with month names
@@ -430,10 +356,10 @@ searchBar2.addEventListener("keyup", async function(event) {
       const minY = Math.floor(Math.min(...prices) / 10) * 10;
     
       // Animation for Chart 2
-      const ctx1 = document.getElementById('stockChart2').getContext('2d');
+      const ctx = document.getElementById('stockChart2').getContext('2d');
     
       // Simulated data for stock prices
-      const stockData1 = {
+      const stockData = {
         labels: labels, // Use month names
         datasets: [
           {
@@ -449,52 +375,13 @@ searchBar2.addEventListener("keyup", async function(event) {
       };
     
       // Modify the line color based on data points
-      const data1 = stockData1.datasets[0].data;
+      const data1 = stockData.datasets[0].data;
     
       if (data1[data1.length - 1] > data1[data1.length - 2]) {
-        stockData1.datasets[0].borderColor = 'red';
+        stockData.datasets[0].borderColor = 'red';
       }
     
-      // Create the chart
-      const stockChart1 = new Chart(ctx1, {
-        type: 'line',
-        data: stockData1,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              beginAtZero: true,
-              grid: {
-                display: false, // Remove vertical grid lines
-              },
-              ticks: {
-                color: 'white', // Set x-axis label color to white
-              },
-            },
-            y: {
-              beginAtZero: false,
-              suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-              stepSize: 10,
-              grid: {
-                color: 'white', // Set y-axis grid line color to white
-              },
-              ticks: {
-                color: 'white', // Set y-axis label color to white
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              display: false,
-            },
-            tooltip: {
-              enabled: true,
-              position: 'nearest',
-            },
-          },
-        },
-      });
+      const stockChart2 = createChart(stockData, ctx, minY);
     
       // Set the horizontal grid lines to 10% opacity
       stockChart1.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
@@ -520,24 +407,7 @@ console.log(prices); // latest 52-week prices
 const now = new Date();
 
 // Array to hold months 
-const months = [];
-
-// Loop 12 times  
-for (let i = 0; i < 12; i++) {
-
-  // Subtract i months from current month
-  const monthIndex = now.getMonth() - i;
-  
-  // Handle wrap around
-  const index = (12 + monthIndex) % 12;
-
-  // Get the month name 
-  const month = monthNames[index];
-
-  // Add to months array
-  months.unshift(month); 
-}
-
+const months = getMonths();
 
 // Replace numeric labels with month names
 const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
@@ -545,8 +415,8 @@ const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.f
 // Calculate the starting y-axis value to the nearest 10th
 const minY = Math.floor(Math.min(...prices) / 10) * 10;
 
-// Animation for Chart 2
-const ctx1 = document.getElementById('stockChart2').getContext('2d');
+// Animation for Chart 1
+const ctx1 = document.getElementById('stockChart1').getContext('2d');
 
 // Simulated data for stock prices
 const stockData1 = {
@@ -567,7 +437,7 @@ const stockData1 = {
 // Modify the line color based on data points
 const data1 = stockData1.datasets[0].data;
 
-if (data[0] > data[data.length - 1]) {
+if (data1[0] > data1[data1.length - 1]) {
   stockData1.datasets[0].borderColor = 'red';
 }
 
@@ -618,8 +488,8 @@ stockChart1.update();
 });
 
 
-
-//deafault chart 
+// ###############################################################################################################
+// //deafault chart 
 getLast52WeekClose('SPY').then(prices => {
   console.log(prices); // latest 52-week prices
 
@@ -627,23 +497,7 @@ getLast52WeekClose('SPY').then(prices => {
   const now = new Date();
 
   // Array to hold months 
-  const months = [];
-
-  // Loop 12 times  
-  for (let i = 0; i < 12; i++) {
-
-    // Subtract i months from current month
-    const monthIndex = now.getMonth() - i;
-    
-    // Handle wrap around
-    const index = (12 + monthIndex) % 12;
-
-    // Get the month name 
-    const month = monthNames[index];
-
-    // Add to months array
-    months.unshift(month); 
-  }
+  const months = getMonths();
 
 
   // Replace numeric labels with month names
@@ -653,7 +507,7 @@ getLast52WeekClose('SPY').then(prices => {
   const minY = Math.floor(Math.min(...prices) / 10) * 10;
 
   // ANIMATION FOR CHART 1
-  const ctx = document.getElementById('stockChart1').getContext('2d');
+  const ctx = document.getElementById('stockChart2').getContext('2d');
 
   // Simulated data for stock prices
   const stockData = {
@@ -680,51 +534,20 @@ getLast52WeekClose('SPY').then(prices => {
     stockData.datasets[0].borderColor = 'green';
   }
 
+
+    //stockData
   // Create the chart
-  const stockChart = new Chart(ctx, {
-    type: 'line',
-    data: stockData,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          beginAtZero: true,
-          grid: {
-            display: false, // Remove vertical grid lines
-          },
-          ticks: {
-            color: 'white', // Set x-axis label color to white
-          },
-        },
-        y: {
-          beginAtZero: false,
-          suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-          stepSize: 10,
-          grid: {
-            color: 'white', // Set y-axis grid line color to white
-          },
-          ticks: {
-            color: 'white', // Set y-axis label color to white
-          },
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        tooltip: {
-          enabled: true,
-          position: 'nearest',
-        },
-      },
-    },
-  });
+  const stockChart = createChart(stockData, ctx, minY);
 
   // Set the horizontal grid lines to 10% opacity
   stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
   stockChart.update();
 });
+
+// ###############################################################################################################
+
+
+
 
 
 
