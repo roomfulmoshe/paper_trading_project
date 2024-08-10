@@ -1,15 +1,6 @@
-PAID PREMIUM API KEY(ALPHA VANTAGE):
-EN3735MN44LA7F35
-FREE ALPHA VANTAGE API KEY:
-ALVUPDZ6TOR4O1DV
-
-
-
-
-#########################################FPM API###################################
+########################################################FPM API##############################################################
 FPM FREE API KEY:
 OBjYxQg3fHK1g96r1wfepOixWNovCA6I
-
 
 https://site.financialmodelingprep.com/developer/docs
 
@@ -30,4 +21,27 @@ Find stocks that meet your investment criteria with our Screener (Stock) endpoin
 
 Analyst Recommendation API
 The FMP Analyst Recommendation endpoint provides analyst recommendations for buying, selling, or holding a company's stock. Investors can use this information to get a sense of what analysts think of a company's stock and to make informed investment decisions.
-######################################################################################
+#############################################################################################################################
+
+
+
+
+#############################################################################################################################
+##############################################################TODO###########################################################
+1. Fix the homepage for the charts
+2. Somehow figure out when the last time a user logs in to the website, and check if any of his current holdings did any splits. If yes, update quantity. Probably all of this should go into the backend. But all this code is client side. Maybe get rasberry Pie to host flask app and make all api, database calls there with all logic like dealing with splits. Optimize performance. 
+3. Think about how to deal with the local storage better
+4. Implement buying any stock that exists in the API
+5. Figure out how to minimize API calls for better performance
+6. Create daily charts, monthly, and max charts
+7. Work on renaming some variables
+8. Host this ASAP. Put on resume.
+#############################################################################################################################
+#############################################################################################################################
+
+
+
+PAID PREMIUM API KEY(ALPHA VANTAGE):
+EN3735MN44LA7F35
+FREE ALPHA VANTAGE API KEY:
+ALVUPDZ6TOR4O1DV

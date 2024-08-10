@@ -1,5 +1,5 @@
 //TODO: Work on chart showing green for up and red for down. Then be able to search for any ticker in the world
-import { getLast52WeekClose, getCurrentPrice, createChart, getMonths } from './stocksAPI.js';
+import { getLast52WeekClose, getCurrentPrice, createChart, getMonths, formatDollars, getCurrentDateString, getEmailUsername, fixNav } from './stocksAPI.js';
 // Get the container element where the animation will be displayed
 const container = document.querySelector(".lottie-container");
 
@@ -37,56 +37,6 @@ const auth = getAuth();
 
 const tickers = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "TSLA", "META", "LLY", "V", "UNH", "TSM", "XOM", "WMT", "JPM", "NVO", "JNJ", "MA", "AVGO", "PG", "CVX", "ORCL", "HD", "MRK", "ABBV", "COST", "ADBE", "TM", "ASML", "KO"];
 
-
-function getEmailUsername(email) {
-  const index = email.indexOf('@');
-  if (index === -1) {
-    return email; 
-  }
-
-  return email.substring(0, index);
-}
-
-
-function getCurrentDateString() {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-  const day = String(currentDate.getDate()).padStart(2, '0');
-  
-  // Create a string in the format YYYY-MM-DD (e.g., "2023-10-09")
-  const dateString = `${year}-${month}-${day}`;
-  
-  return dateString;
-}
-
-function formatDollars(amount) {
-
-  // Convert to string
-  let strAmount = amount.toString();
-
-  // Split on decimal
-  let [whole, decimal] = strAmount.split(".");
-
-  // Add commas to whole 
-  whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
-
-  // Limit decimal to 2 places
-  if (decimal) {
-    decimal = decimal.slice(0, 2);
-  }
-
-  // Add decimal back if needed
-  if (decimal) {
-    strAmount = `${whole}.${decimal}`; 
-  } else {
-    strAmount = whole;
-  }
-
-  // Add $ and return
-  return "$" + strAmount;
-
-}
 
 function handleBuyBtnClick(stockIndex, stockTicker) {
     localStorage.setItem("buyBtn", stockTicker);
@@ -260,14 +210,8 @@ searchBar1.addEventListener("keyup", async function(event) {
 
     getLast52WeekClose(searchValue1).then(prices => {
       console.log(searchValue1 + "CURRENT PRICES: "+ prices); // latest 52-week prices
-      
-        // Get current date
-        const now = new Date();
-
-        // Array to hold months 
-        const months = getMonths();
-
-    
+      // Array to hold months 
+      const months = getMonths();
       // Replace numeric labels with month names
       const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
     
@@ -341,9 +285,6 @@ searchBar2.addEventListener("keyup", async function(event) {
 
     getLast52WeekClose(searchValue2).then(prices => {
       console.log(prices); // latest 52-week prices
-    
-      // Get current date
-      const now = new Date();
 
       // Array to hold months 
       const months = getMonths();
@@ -376,7 +317,7 @@ searchBar2.addEventListener("keyup", async function(event) {
     
       // Modify the line color based on data points
       const data1 = stockData.datasets[0].data;
-    
+      // ///////////////////////////////////////////////////////////////////////////////////////////////////  ///////////////////////////////////////////////////////////////////////////////////////////////////
       if (data1[data1.length - 1] > data1[data1.length - 2]) {
         stockData.datasets[0].borderColor = 'red';
       }
@@ -384,8 +325,8 @@ searchBar2.addEventListener("keyup", async function(event) {
       const stockChart2 = createChart(stockData, ctx, minY);
     
       // Set the horizontal grid lines to 10% opacity
-      stockChart1.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
-      stockChart1.update();
+      stockChart2.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
+      stockChart2.update();
     });
     
   }
@@ -396,6 +337,8 @@ searchBar2.addEventListener("keyup", async function(event) {
 let number1 = await getCurrentPrice('QQQ');
 let number2 = await getCurrentPrice('SPY');
 
+
+////////////////////////////////////////////////////////////////CRACK AT THIS. MAKE IT WORK FOR PORTFOLIO PAGE TOO. IDK WHAT TO DO ABOUT THIS CSS MESS. Oh dear lord, I don't want to look at that garbage CSS my friend wrote
 number1 = formatDollars(number1);
 number2 = formatDollars(number2);
 document.getElementById('displayStockName2').innerHTML = `S&P 500 <p>Latest Price ${number2}</p>`;
@@ -403,8 +346,6 @@ document.getElementById('displayStockName').innerHTML = `QQQ <p>Latest Price ${n
 
 getLast52WeekClose('QQQ').then(prices => {
 console.log(prices); // latest 52-week prices
-// Get current date
-const now = new Date();
 
 // Array to hold months 
 const months = getMonths();
@@ -441,46 +382,7 @@ if (data1[0] > data1[data1.length - 1]) {
   stockData1.datasets[0].borderColor = 'red';
 }
 
-// Create the chart
-const stockChart1 = new Chart(ctx1, {
-  type: 'line',
-  data: stockData1,
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        beginAtZero: true,
-        grid: {
-          display: false, // Remove vertical grid lines
-        },
-        ticks: {
-          color: 'white', // Set x-axis label color to white
-        },
-      },
-      y: {
-        beginAtZero: false,
-        suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-        stepSize: 10,
-        grid: {
-          color: 'white', // Set y-axis grid line color to white
-        },
-        ticks: {
-          color: 'white', // Set y-axis label color to white
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: true,
-        position: 'nearest',
-      },
-    },
-  },
-});
+const stockChart1 = createChart(stockData1, ctx1, minY);
 
 // Set the horizontal grid lines to 10% opacity
 stockChart1.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
@@ -492,9 +394,6 @@ stockChart1.update();
 // //deafault chart 
 getLast52WeekClose('SPY').then(prices => {
   console.log(prices); // latest 52-week prices
-
-  // Get current date
-  const now = new Date();
 
   // Array to hold months 
   const months = getMonths();
@@ -528,14 +427,13 @@ getLast52WeekClose('SPY').then(prices => {
   // Modify the line color based on data points
   const data = stockData.datasets[0].data;
 
-  if (data[0] > data[data.length - 1]) {
+  if( data[0] > data[data.length - 1] ) {
     stockData.datasets[0].borderColor = 'red';
-  } else {
-    stockData.datasets[0].borderColor = 'green';
+    console.log("Dataset: beginning" + data[0] + " end of dataset")
+    console.log("All data:  " + data)
   }
 
 
-    //stockData
   // Create the chart
   const stockChart = createChart(stockData, ctx, minY);
 
@@ -547,18 +445,5 @@ getLast52WeekClose('SPY').then(prices => {
 // ###############################################################################################################
 
 
-
-
-
-
 //Sticky nav bar
-const nav = document.querySelector('.nav')
 window.addEventListener('scroll', fixNav)
-
-function fixNav() {
-    if(window.scrollY > nav.offsetHeight + 150) {
-        nav.classList.add('active')
-    } else {
-        nav.classList.remove('active')
-    }
-}

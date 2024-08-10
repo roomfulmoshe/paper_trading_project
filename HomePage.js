@@ -6,7 +6,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, on
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Import individual functions directly
-import { getLast52WeekClose, getCurrentPrice, formatDollars, getCurrentDateString, getEmailUsername, getMonths, createChart } from './stocksAPI.js';
+import { getLast52WeekClose, getCurrentPrice, formatDollars, getCurrentDateString, getEmailUsername, getMonths, createChart, fixNav } from './stocksAPI.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -30,13 +30,6 @@ const auth = getAuth();
 const nav = document.querySelector('.nav')
 window.addEventListener('scroll', fixNav)
 
-function fixNav() {
-    if(window.scrollY > nav.offsetHeight + 150) {
-        nav.classList.add('active')
-    } else {
-        nav.classList.remove('active')
-    }
-}
 
 
 // Get the container element where the animation will be displayed
@@ -209,7 +202,8 @@ getLast52WeekClose('SPY').then(prices => {
   console.log(prices); // latest 52 week prices
   // ANIMATION FOR CHART 1 
   const ctx = document.getElementById('stockChart1').getContext('2d');
-  // Simulated data for stock prices
+  const SPYPrice = prices[prices.length - 1];
+  document.getElementById('price2').innerText = `${SPYPrice} `;
 
   const months = getMonths();
 
@@ -226,7 +220,7 @@ getLast52WeekClose('SPY').then(prices => {
        {
          label: 'SPY',
          data: prices, // Actual data
-         borderColor: 'green', // Initial color
+         borderColor: 'greem', // Initial color
          borderWidth: 3, // Set line width
          borderJoinStyle: 'round', // Soften the edges
          fill: false,
@@ -258,11 +252,13 @@ getLast52WeekClose('SPY').then(prices => {
 
 
 getLast52WeekClose('QQQ').then(prices => {
-  console.log(prices); // latest 52 week prices
+  console.log("qqq prices 52 weeks:  \n" + prices); // latest 52 week prices
   //Animation for Chart 2
   const ctx1 = document.getElementById('stockChart2').getContext('2d');
-  
 
+  const QQQPrice = prices[prices.length - 1];
+  document.getElementById('price1').innerText = `${QQQPrice}`;
+  
   const months = getMonths();
    // Replace numeric labels with month names
    const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));

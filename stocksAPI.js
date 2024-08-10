@@ -191,5 +191,14 @@ function getEmailUsername(email) {
   return email.substring(0, index);
 }
 
+function fixNav() {
+  const nav = document.querySelector('.nav')
+  if(window.scrollY > nav.offsetHeight + 150) {
+      nav.classList.add('active')
+  } else {
+      nav.classList.remove('active')
+  }
+}
+
 // Export multiple functions using an object
-export { getCurrentPrice, getLast52WeekClose, createChart, getMonths, formatDollars, getCurrentDateString, getEmailUsername};
+export { getCurrentPrice, getLast52WeekClose, createChart, getMonths, formatDollars, getCurrentDateString, getEmailUsername, fixNav};
