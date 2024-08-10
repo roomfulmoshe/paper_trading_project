@@ -71,48 +71,82 @@ async function getCurrentPrice(ticker) {
   }
 }
 
+function createChart(stockData, ctx, minY) {
+  const prices = stockData.datasets[0].data;
+  const lastIndex = prices.length - 1;
+  const minValue = Math.floor(Math.min(...prices));
+  const maxValue = Math.ceil(Math.max(...prices));
+  console.log("CREATING CHART: " + prices, prices.length );
 
-function createChart(stockData, ctx, minY){
   return new Chart(ctx, {
     type: 'line',
-    data: stockData,
+    data: {
+      labels: stockData.labels,
+      datasets: [
+        {
+          label: 'Stock Price',
+          data: prices,
+          borderColor: (context) => {
+            if (prices[prices.length - 1] < prices[0]) {
+              return 'red';
+            } else {
+              return 'green';
+            }
+          },
+          borderWidth: (context) => context.dataIndex === lastIndex - 1 ? 4 : 2,
+          pointRadius: (context) => context.dataIndex === lastIndex ? 6 : 2,
+          pointHoverRadius: (context) => context.dataIndex === lastIndex ? 8 : 4,
+          pointBackgroundColor: (context) => context.dataIndex === lastIndex ? 'lime' : 'green',
+          pointBorderColor: (context) => context.dataIndex === lastIndex ? 'white' : 'green',
+          pointBorderWidth: (context) => context.dataIndex === lastIndex ? 2 : 1,
+          fill: false,
+        }
+      ]
+    },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
         x: {
-          beginAtZero: true,
-          grid: {
-            display: false, // Remove vertical grid lines
-          },
-          ticks: {
-            color: 'white', // Set x-axis label color to white
-          },
+          grid: { display: false },
+          ticks: { color: 'white' },
         },
         y: {
           beginAtZero: false,
-          suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-          stepSize: 10,
-          grid: {
-            color: 'white', // Set y-axis grid line color to white
-          },
+          min: minValue - (minValue % 10),
+          max: maxValue + (10 - (maxValue % 10)),
+          grid: { color: 'rgba(255, 255, 255, 0.1)' },
           ticks: {
-            color: 'white', // Set y-axis label color to white
+            color: 'white',
+            callback: (value) => `$${value}`
           },
         },
       },
       plugins: {
-        legend: {
-          display: false,
-        },
+        legend: { display: false },
         tooltip: {
           enabled: true,
-          position: 'nearest',
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            label: (context) => {
+              let label = context.dataset.label || '';
+              if (label) {
+                label += ': ';
+              }
+              if (context.parsed.y !== null) {
+                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+              }
+              return label;
+            }
+          }
         },
       },
     },
   });
 }
+
+
 
 
 function getMonths(){

@@ -241,9 +241,9 @@ searchBar1.addEventListener("keyup", async function(event) {
       const data = stockData.datasets[0].data;
       if (data[data.length - 1] < data[0]) {
           stockData.datasets[0].borderColor = 'red';
-        } else {
+      } else {
           stockData.datasets[0].borderColor = 'green';
-        }
+      }
     
       // Create the chart
       const stockChart = createChart(stockData, ctx, minY);
@@ -318,8 +318,10 @@ searchBar2.addEventListener("keyup", async function(event) {
       // Modify the line color based on data points
       const data1 = stockData.datasets[0].data;
       // ///////////////////////////////////////////////////////////////////////////////////////////////////  ///////////////////////////////////////////////////////////////////////////////////////////////////
-      if (data1[data1.length - 1] > data1[data1.length - 2]) {
-        stockData.datasets[0].borderColor = 'red';
+      if (data1[data1.length - 1] < data1[0]) {
+          stockData.datasets[0].borderColor = 'red';
+      } else {
+          stockData.datasets[0].borderColor = 'green';
       }
     
       const stockChart2 = createChart(stockData, ctx, minY);

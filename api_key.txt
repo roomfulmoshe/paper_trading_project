@@ -39,6 +39,7 @@ The FMP Analyst Recommendation endpoint provides analyst recommendations for buy
 9. Make title on each page work and add icon
 10. Make it responsive? 
 11. Why are the charts not accurate? !!!
+12. No stock purchases outside market hours. 9:30 AM TO 4:00 PM EST
 #############################################################################################################################
 #############################################################################################################################
 

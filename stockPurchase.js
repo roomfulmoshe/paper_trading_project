@@ -123,28 +123,22 @@ submitButton.addEventListener("click", function(event) {
   });
 
 
-
-//ticker
-//Stock chart animation
-var closing_prices = null;
 getLast52WeekClose(ticker).then(prices => {
     // Array to hold months 
-    const months = getMonths();
-
-
+  const months = getMonths();
 
 
     const labels = Array.from({ length: 50 }, (_, i) => (i % 4 === 0 ? months[Math.floor(i / 4)] : ''));
 
     // Calculate the starting y-axis value to the nearest 10th
-    const minY = Math.floor(Math.min(...prices) / 10) * 10;
+    let minY = Math.floor(Math.min(...prices) / 10) * 10;
 
     const ctx = document.getElementById('stockChart1').getContext('2d');
    // Simulated data for stock prices
    const stockData = {
     labels: labels, // Use month names
     datasets: [
-        {
+       {
             label: 'Stock Price',
             data: prices, // Simulated data
             borderColor: 'green', // Initial color
