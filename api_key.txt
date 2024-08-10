@@ -28,14 +28,17 @@ The FMP Analyst Recommendation endpoint provides analyst recommendations for buy
 
 #############################################################################################################################
 ##############################################################TODO###########################################################
-1. Fix the homepage for the charts
+1. CHECK Fix the homepage for the charts CHECK
 2. Somehow figure out when the last time a user logs in to the website, and check if any of his current holdings did any splits. If yes, update quantity. Probably all of this should go into the backend. But all this code is client side. Maybe get rasberry Pie to host flask app and make all api, database calls there with all logic like dealing with splits. Optimize performance. 
 3. Think about how to deal with the local storage better
-4. Implement buying any stock that exists in the API
+4. Implement buying any stock that exists in the API !!!
 5. Figure out how to minimize API calls for better performance
 6. Create daily charts, monthly, and max charts
 7. Work on renaming some variables
-8. Host this ASAP. Put on resume.
+8. Host this ASAP. Put on resume. !!!
+9. Make title on each page work and add icon
+10. Make it responsive? 
+11. Why are the charts not accurate? !!!
 #############################################################################################################################
 #############################################################################################################################
 

@@ -1,3 +1,4 @@
+import { getLast52WeekClose, getCurrentPrice, formatDollars, getMonths, createChart } from './stocksAPI.js';
 //Lottie Animation
 // Get the container element where the animation will be displayed
 const container = document.querySelector(".lottie-container");
@@ -50,51 +51,14 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-async function getCurrentPrice(ticker) {
-    const API_KEY = 'EN3735MN44LA7F35';
-    const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${API_KEY}`;
-    
-    try {
-      const response = await axios.get(url);
-      const price = response.data['Global Quote']['05. price'];
-      return price;
-    } catch (error) {
-      console.error(error);
-      throw error; // Re-throw the error to handle it elsewhere if needed
-    }
-  }
-
 
 
 //TODO: create function that returns last 52 week prices as an aray
-async function getLast52WeekClose(ticker) {
-
-    // Use a valid API key 
-    const API_KEY = 'EN3735MN44LA7F35';
-    
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`;
-  
-    try {
-  
-      const response = await axios.get(url);
-  
-      const weeklyClosePrices = Object.values(response.data['Weekly Adjusted Time Series'])
-        .map(day => Number(day['5. adjusted close']))
-        .reverse();
-  
-      // Slice last 52 weeks
-      return weeklyClosePrices.slice(-52);
-  
-    } catch (error) {
-      console.error(error);
-    }
-  
-  }
 let ticker  = localStorage.getItem('buyBtn');
 document.getElementById('stockName').innerText = ticker;
 let currentPrice = await getCurrentPrice(ticker);
 
-document.getElementById('stockPrice').innerText = "current price: $" + currentPrice
+document.getElementById('stockPrice').innerText = "current price: $" + formatDollars(currentPrice)
 
 
 const submitButton = document.getElementById('btnSubmit');
@@ -164,33 +128,8 @@ submitButton.addEventListener("click", function(event) {
 //Stock chart animation
 var closing_prices = null;
 getLast52WeekClose(ticker).then(prices => {
-    closing_prices = prices;
-    console.log(closing_prices);
-    const monthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    // Get current date
-    const now = new Date();
-  
     // Array to hold months 
-    const months = [];
-  
-    // Loop 12 times  
-    for (let i = 0; i < 12; i++) {
-  
-      // Subtract i months from current month
-      const monthIndex = now.getMonth() - i;
-      
-      // Handle wrap around
-      const index = (12 + monthIndex) % 12;
-  
-      // Get the month name 
-      const month = monthNames[index];
-  
-      // Add to months array
-      months.unshift(month); 
-    }
+    const months = getMonths();
 
 
 
@@ -207,7 +146,7 @@ getLast52WeekClose(ticker).then(prices => {
     datasets: [
         {
             label: 'Stock Price',
-            data: closing_prices, // Simulated data
+            data: prices, // Simulated data
             borderColor: 'green', // Initial color
             borderWidth: 3, // Set line width
             borderJoinStyle: 'round', // Soften the edges
@@ -220,54 +159,12 @@ getLast52WeekClose(ticker).then(prices => {
     // Modify the line color based on data points
     const data = stockData.datasets[0].data;
 
-    if (data[data.length - 1] < data[data.length - 2]) {
-        stockData.datasets[0].borderColor = 'red';
-    
-    } else stockData.datasets[0].borderColor = 'green';
-
-    // Create the chart
-
-
-    const stockChart = new Chart(ctx, {
-        type: 'line',
-        data: stockData,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              beginAtZero: true,
-              grid: {
-                display: false, // Remove vertical grid lines
-              },
-              ticks: {
-                color: 'white', // Set x-axis label color to white
-              },
-            },
-            y: {
-              beginAtZero: false,
-              suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-              stepSize: 10,
-              grid: {
-                color: 'white', // Set y-axis grid line color to white
-              },
-              ticks: {
-                color: 'white', // Set y-axis label color to white
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              display: false,
-            },
-            tooltip: {
-              enabled: true,
-              position: 'nearest',
-            },
-          },
-        },
-      });
-    
+    if (data[data.length - 1] < data[0]) {
+      stockData.datasets[0].borderColor = 'red';
+    } else {
+      stockData.datasets[0].borderColor = 'green';
+    }
+    const stockChart = createChart(stockData, ctx, minY);
 
 
 

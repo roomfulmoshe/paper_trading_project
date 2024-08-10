@@ -1,3 +1,4 @@
+import { getLast52WeekClose, getCurrentPrice, formatDollars, getMonths, createChart } from './stocksAPI.js';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
@@ -48,7 +49,6 @@ lottie.loadAnimation({
   path: "https://lottie.host/4bcddfb6-7284-4937-a41e-0d930e3faca0/A1AKLEELew.json", // Provide the URL of the animation JSON
 });
 
-import { getLast52WeekClose} from './stocksAPI.js';
 
 
 
@@ -139,31 +139,7 @@ var closing_prices = null;
 getLast52WeekClose(ticker).then(prices => {
     closing_prices = prices;
     console.log(closing_prices);
-    const monthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    // Get current date
-    const now = new Date();
-  
-    // Array to hold months 
-    const months = [];
-  
-    // Loop 12 times  
-    for (let i = 0; i < 12; i++) {
-  
-      // Subtract i months from current month
-      const monthIndex = now.getMonth() - i;
-      
-      // Handle wrap around
-      const index = (12 + monthIndex) % 12;
-  
-      // Get the month name 
-      const month = monthNames[index];
-  
-      // Add to months array
-      months.unshift(month); 
-    }
+    const months = getMonths();
 
 
 
@@ -193,57 +169,13 @@ getLast52WeekClose(ticker).then(prices => {
     // Modify the line color based on data points
     const data = stockData.datasets[0].data;
 
-    if (data[data.length - 1] < data[data.length - 2]) {
-        stockData.datasets[0].borderColor = 'red';
-    
-    } else stockData.datasets[0].borderColor = 'green';
+    if (data[data.length - 1] < data[0]) {
+      stockData.datasets[0].borderColor = 'red';
+    } else {
+      stockData.datasets[0].borderColor = 'green';
+    }
 
-    // Create the chart
-
-
-    const stockChart = new Chart(ctx, {
-        type: 'line',
-        data: stockData,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              beginAtZero: true,
-              grid: {
-                display: false, // Remove vertical grid lines
-              },
-              ticks: {
-                color: 'white', // Set x-axis label color to white
-              },
-            },
-            y: {
-              beginAtZero: false,
-              suggestedMin: minY, // Set the suggested minimum to the nearest 10th
-              stepSize: 10,
-              grid: {
-                color: 'white', // Set y-axis grid line color to white
-              },
-              ticks: {
-                color: 'white', // Set y-axis label color to white
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              display: false,
-            },
-            tooltip: {
-              enabled: true,
-              position: 'nearest',
-            },
-          },
-        },
-      });
-    
-
-
-
+    const stockChart = createChart(stockData, ctx, minY);
 
     // Set the horizontal grid lines to 10% opacity
     stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
