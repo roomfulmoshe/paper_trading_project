@@ -1,6 +1,6 @@
 # Paper Trading Simulator 
 
-## [WEBSITE](https://roomfulmoshe.github.io/paper_trading_project/)
+## <a href="https://roomfulmoshe.github.io/paper_trading_project/" target="_blank">Website Link</a>
 
 ## About
 
