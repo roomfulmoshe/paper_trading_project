@@ -48,7 +48,8 @@ signUp.addEventListener('click', async (e) => {
 
         // User has been created successfully and database is updated,
         // now navigate to the new homepage
-        window.location.href = "HomePage.html";
+        localStorage.setItem('buyingPower', 1000000);
+        window.location.href = "buy.html";
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;

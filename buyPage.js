@@ -46,6 +46,9 @@ function handleBuyBtnClick(stockIndex, stockTicker) {
 async function displayUserInfo(assetData) {
   //table to display user's stocks
   const table = document.getElementById('stockListTable');
+  if (assetData.length == 0){
+    localStorage.setItem('buyingPower', 1000000);
+  }
   var totalValue = 0;
   for (let i = 0; i < assetData.length; i++) {
     if (assetData[i].asset === "$") {

@@ -52,13 +52,16 @@ const database = getDatabase(app);
 const auth = getAuth();
 
 
+ const buyingPower = localStorage.getItem('buyingPower');
+console.log(buyingPower);
 
 //TODO: create function that returns last 52 week prices as an aray
 let ticker  = localStorage.getItem('buyBtn');
 document.getElementById('stockName').innerText = ticker;
+document.getElementById('title').innerText = "Purchase " + ticker;
 let currentPrice = await getCurrentPrice(ticker);
 
-document.getElementById('stockPrice').innerText = "current price: $" + formatDollars(currentPrice)
+document.getElementById('stockPrice').innerText = "current price: " + formatDollars(currentPrice)
 
 
 const submitButton = document.getElementById('btnSubmit');
@@ -67,9 +70,10 @@ submitButton.addEventListener("click", function(event) {
     event.preventDefault(); // Prevent the form from submitting (if it's inside a form element)
 
     // Retrieve the number of shares entered by the user
-    const amountOfShares = document.getElementById("shares").value;
+    let amountOfShares = document.getElementById("shares").value;
     //check if the use has enough money to complete the request
-    const buyingPower = localStorage.getItem('buyingPower')
+    const buyingPower = localStorage.getItem('buyingPower');
+    console.log(buyingPower);
     console.log('buyingPower', buyingPower)
     if(amountOfShares <= 0){
         alert('Please enter positive amount of shares');
@@ -86,9 +90,11 @@ submitButton.addEventListener("click", function(event) {
         get(assetsRef)
         .then((snapshot) => {
             if (snapshot.exists()) {
+                console.log("Snapshot already exists");
                 const assetData = snapshot.val();
                 // Do something with assetData, which will be an array
                 var foundTicker = false;
+                console.log(assetData);
                 for(let i = 0; i < assetData.length; i++){
                     if(assetData[i].asset == ticker){
                         let numberOfShares = Number(amountOfShares); 
@@ -110,9 +116,18 @@ submitButton.addEventListener("click", function(event) {
                 set(ref(database, 'user_assets/' + userUID), {
                 assets: assetData
                 })
-                window.location.href = "buy.html";
+                window.location.href = "HomePage.html";
             } else {
-                console.log("No data available for this user");
+                localStorage.setItem('loggedIn', true);
+                const amountOfCash = 1000000 - currentPrice*amountOfShares
+                let assetData = [{asset: '$', amount: amountOfCash}];
+                amountOfShares = Number(amountOfShares);
+                console.log(assetData)
+                assetData.push({amount: amountOfShares, asset: ticker})
+                set(ref(database, 'user_assets/' + userUID), {
+                assets: assetData
+                })
+                window.location.href = "HomePage.html";
             }
         })
         .catch((error) => {

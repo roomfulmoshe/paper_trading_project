@@ -134,9 +134,10 @@ async function displayUserInfo(assetData) {
     }
     document.getElementById('totalValue').innerText = formatDollars(Math.floor(totalValue));
   }
-  if(assetData.length == 1){
+  if(assetData.length == 1 || assetData.length == 0) {
+    document.getElementById('tableHeader').remove();
     const heading = document.createElement('h1');
-    heading.innerText = "You don't own any stocks";
+    heading.innerHTML = "<p>You don't own any stocks. Go to <a href='buy.html'>buy page</a></p>";
     table.appendChild(heading);
   }
 }
@@ -165,6 +166,7 @@ if (loggedInUser) {
         assets: assetData
       })
       displayUserInfo(assetData);
+      localStorage.setItem('loggedIn',true);
       localStorage.setItem('buyingPower', 1000000);
     }
     else{
@@ -176,7 +178,7 @@ if (loggedInUser) {
         .then((snapshot) => {
           if (snapshot.exists()) {
             const assetData = snapshot.val();
-            console.log("user's " + userUID + " asset data:   " + assetData);
+            console.log(assetData);
             // Do something with assetData, which will be an array
             displayUserInfo(assetData);
           } else {

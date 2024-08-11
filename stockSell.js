@@ -63,6 +63,7 @@ var shares = localStorage.getItem('SharesAvail');
 var currentPrice = localStorage.getItem('sellCurrentPrice');
 
 document.getElementById('stockName').innerText = ticker;
+document.getElementById('title').innerText = "Sell " + ticker
 
 document.getElementById('stockPrice').innerText = "current price: $" + currentPrice;
 document.getElementById('sharesAvailable').innerText = "Shares available: " + shares;
