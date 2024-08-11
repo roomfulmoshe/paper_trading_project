@@ -28,8 +28,7 @@ The FMP Analyst Recommendation endpoint provides analyst recommendations for buy
 
 #############################################################################################################################
 ##############################################################TODO###########################################################
-1. CHECK Fix the homepage for the charts CHECK
-2. Somehow figure out when the last time a user logs in to the website, and check if any of his current holdings did any splits. If yes, update quantity. Probably all of this should go into the backend. But all this code is client side. Maybe get rasberry Pie to host flask app and make all api, database calls there with all logic like dealing with splits. Optimize performance. 
+2. Somehow figure out when the last time a user logs in to the website, and check if any of his current holdings did any splits. If yes, update quantity. Probably all of this should go into the backend. But all this code is client side. Maybe get rasberry Pie to host flask app and make all api, database calls there with all logic like dealing with splits. Optimize performance.
 3. Think about how to deal with the local storage better
 4. Implement buying any stock that exists in the API !!!
 5. Figure out how to minimize API calls for better performance
@@ -38,8 +37,10 @@ The FMP Analyst Recommendation endpoint provides analyst recommendations for buy
 8. Host this ASAP. Put on resume. !!!
 9. Make title on each page work and add icon
 10. Make it responsive? 
-11. Why are the charts not accurate? !!!
+11. Why are the charts not accurate? !!! make charts have all the months clear and nicely
 12. No stock purchases outside market hours. 9:30 AM TO 4:00 PM EST
+13. Click a button and change industry in buy page. And make deafult top 50 stocks by market cap
+14. Send first time user to buy page
 #############################################################################################################################
 #############################################################################################################################
 
