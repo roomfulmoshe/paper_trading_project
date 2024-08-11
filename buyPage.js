@@ -188,13 +188,26 @@ var searchBar1 = document.getElementById("searchBar1");
 searchBar1.addEventListener("keyup", async function(event) {
   // Check if the key pressed is Enter (keyCode 13)
   if (event.key === "Enter") {
+    console.log("Enter")
     
     // Get the value of the input field
     var searchValue1 = searchBar1.value;
 
-    let number = await getCurrentPrice(searchValue1);
+    let number = null
+    try{
+      number = await getCurrentPrice(searchValue1);
+    }
+    catch(error){
+      console.log(error);
+      return null;
+    }
     number = formatDollars(number);
     document.getElementById('displayStockName').innerHTML = `${searchValue1.toUpperCase()} <p>Latest Price ${number}</p>`;
+    const searchButton1 = document.getElementById('SearchBuyButton1');
+    searchButton1.innerText = "Buy " + searchValue1.toUpperCase();
+    searchButton1.addEventListener("click", function() {
+          handleBuyBtnClick(0,  searchValue1);  
+    });
 
     var chartCanvas = document.getElementById('stockChart1');
 
@@ -252,10 +265,6 @@ searchBar1.addEventListener("keyup", async function(event) {
       stockChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.1)';
       stockChart.update();
     });
-    
-    
-    
-   
   }
 });
 
@@ -270,9 +279,22 @@ searchBar2.addEventListener("keyup", async function(event) {
     var searchValue2 = searchBar2.value;
 
     var chartCanvas = document.getElementById('stockChart2');
-    let number = await getCurrentPrice(searchValue2);
+       let number = null
+    try{
+      number = await getCurrentPrice(searchValue2);
+    }
+    catch(error){
+      console.log(error);
+      return null;
+    }
     number = formatDollars(number);
     document.getElementById('displayStockName2').innerHTML = `${searchValue2.toUpperCase()} <p>Latest Price ${number}</p>`;
+
+    const searchButton2 = document.getElementById('SearchBuyButton2');
+    searchButton2.innerText = "Buy " + searchValue2.toUpperCase();
+    searchButton2.addEventListener("click", function() {
+          handleBuyBtnClick(0,  searchValue2);  
+    });
 
     // Check if a chart exists and destroy it
     if (chartCanvas) {
@@ -444,6 +466,16 @@ getLast52WeekClose('SPY').then(prices => {
   stockChart.update();
 });
 
+const purchaseBtn1 = document.getElementById('SearchBuyButton1');
+purchaseBtn1.addEventListener("click", function() {
+          handleBuyBtnClick(0,  "QQQ");  
+});
+
+
+const purchaseBtn2 = document.getElementById('SearchBuyButton2');
+purchaseBtn2.addEventListener("click", function() {
+          handleBuyBtnClick(0,  "SPY");  
+});
 // ###############################################################################################################
 
 

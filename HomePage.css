@@ -317,9 +317,9 @@ body {
   text-align: left;
   margin: 5% 5% 3px;
   
-  padding: 2%;
+  padding: 1% 1%;
   border-radius: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 
 
 }
@@ -745,4 +745,76 @@ button.buyButton:active, button.sellButton:active {
 
 #scrolling-container tr.animate:nth-child(even) {
   transform: translateX(0);
+}
+
+#SearchBuyButton1,
+#SearchBuyButton2 {
+  background-color: #1a1a1a;
+  /* Dark background color */
+  color: #ffffff;
+  /* White text color */
+  border: 3px solid #00ff00;
+  /* Thicker green border */
+  border-radius: 10px;
+  /* More rounded corners */
+  padding: 5px 0;
+  /* Larger padding to make the button fill the row */
+  font-family: Arial, sans-serif;
+  /* Professional font */
+  font-size: 25px;
+  /* Larger font size */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  width: 100%;
+  /* Make the button fill the entire row */
+  transition: all 0.3s ease;
+  /* Smooth transition for hover effects */
+  text-align: center;
+  /* Center the text */
+  margin: 0px 0 0px 0;
+  /* Increased margin-bottom to create more space below the buttons */
+  position: relative;
+  /* For animation */
+  overflow: hidden;
+  /* Hide overflow for animation */
+}
+
+#SearchBuyButton1:hover,
+#SearchBuyButton2:hover {
+  background-color: #00ff00;
+  /* Green background on hover */
+  color: #1a1a1a;
+  /* Dark text color on hover */
+  border-color: #ffffff;
+  /* White border on hover */
+}
+
+#SearchBuyButton1:active,
+#SearchBuyButton2:active {
+  background-color: #ffffff;
+  /* White background when clicked */
+  color: #ff0000;
+  /* Red text color when clicked */
+  border-color: #ff0000;
+  /* Red border when clicked */
+}
+
+/* Animation Effect */
+#SearchBuyButton1::before,
+#SearchBuyButton2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  /* Slight white overlay */
+  transition: left 0.5s ease;
+}
+
+#SearchBuyButton1:hover::before,
+#SearchBuyButton2:hover::before {
+  left: 100%;
+  /* Slide the overlay from left to right */
 }

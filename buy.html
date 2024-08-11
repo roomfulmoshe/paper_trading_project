@@ -10,6 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.2/lottie.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
 
 </head>
@@ -48,7 +49,7 @@
   </div>
 
   <div class="page2">
-    <h1>Compare Stocks</h1>
+    <h1>Compare Performance and Buy Stocks</h1>
     <table class="compareCharts">
      
       <tr>
@@ -57,7 +58,7 @@
             <button class="search">
               <img src="searchBar.png" alt="search" width="40" id="searchBarImage">
             </button>
-            <input type="text" class="input" id="searchBar1" placeholder="Search for stocks">
+            <input type="text" class="input" id="searchBar1" placeholder="Search for stocks (Ex. AAPL, MSFT, TSLA)">
           </div>
         </td>
         <td>
@@ -65,7 +66,7 @@
             <button class="search">
               <img src="searchBar.png" alt="search" width="40" id="searchBarImage">
             </button>
-            <input type="text" class="input" id="searchBar2" placeholder="Search for stocks">
+            <input type="text" class="input" id="searchBar2" placeholder="Search for stocks (Ex. AAPL, MSFT, TSLA)">
           </div>
         </td>
       </tr>
@@ -92,22 +93,23 @@
           </div>
         </td>
       </tr>
+
+      <tr>
+        <td>
+          <button id = "SearchBuyButton1">Buy QQQ</button>
+        </td>
+        <td>
+          <button  id = "SearchBuyButton2">BUY S&P 500</button>
+        </td>
+      </tr>
     </table>
   </div>
-   
-     
-
-    
- 
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-
 
   <div id="test" class="infoBar">
     <table width="100%">
       <tr class="topBar">
-        <th colspan="2">Total value</th>
-        <th colspan="2">Today</th>
+        <th colspan="2">Total Portfolio value</th>
+        <th colspan="2">Date</th>
         <th colspan="2">Buying power</th>
       </tr>
       <tr class="topBar">
